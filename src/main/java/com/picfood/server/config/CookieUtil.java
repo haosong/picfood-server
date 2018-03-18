@@ -1,15 +1,14 @@
 package com.picfood.server.config;
 
-/**
- * Created by shawn on 2018/3/16.
- */
-
 import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * Created by shawn on 2018/3/16.
+ */
 public class CookieUtil {
     public static void create(HttpServletResponse httpServletResponse, String name, String value, Boolean secure, Integer maxAge, String domain) {
         Cookie cookie = new Cookie(name, value);

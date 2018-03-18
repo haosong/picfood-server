@@ -7,4 +7,10 @@ import com.picfood.server.entity.User;
  */
 public interface UserService {
     public boolean validatePassword(User user);
+
+    public User getUserById(Long id);
+
+    public User updateUser(User user);
+
+    public Object createUser(User user);
 }

@@ -1,25 +1,17 @@
 package com.picfood.server.config;
 
-/**
- * Created by shawn on 2018/3/16.
- */
-
-import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import java.util.*;
 
+/**
+ * Created by shawn on 2018/3/16.
+ */
 public class JwtUtil {
     public static final long EXPIRATION_TIME = 3600_000_000L; // 1000 hour
     public static final String SECRET = "ThisIsASecret";//please change to your own encryption secret.
@@ -36,7 +28,7 @@ public class JwtUtil {
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS512, SECRET)
                 .compact();
-        return TOKEN_PREFIX + jwt; //jwt前面一般都会加Bearer
+        return TOKEN_PREFIX + jwt;
     }
 
     public static HttpServletRequest validateTokenAndAddUserIdToHeader(HttpServletRequest request) {

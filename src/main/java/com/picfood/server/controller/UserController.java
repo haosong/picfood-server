@@ -17,7 +17,6 @@ import static com.picfood.server.config.JwtUtil.USER_ID;
 /**
  * Created by shawn on 2018/3/15.
  */
-
 @RestController
 public class UserController {
 
@@ -43,18 +42,19 @@ public class UserController {
 
     @PostMapping("/register")
     public Object register(@RequestBody final User user) {
-        return null;
+        // Validate Email and Password. Can be done in front-end.
+        return userService.createUser(user);
     }
 
     @GetMapping("/api/users/me")
     // @ResponseBody
     public Object getUser(@RequestHeader(value = USER_ID) String userId) {
-        return "get user, id is '" + userId + "'";
+        return userService.getUserById(Long.parseLong(userId));
     }
 
     @PostMapping("/api/users/me")
     public Object modifyUser(@RequestHeader(value = USER_ID) String userId, @RequestBody final User user) {
-        return "modify user, id is '" + userId + "'";
+        return userService.updateUser(user);
     }
 
 }
