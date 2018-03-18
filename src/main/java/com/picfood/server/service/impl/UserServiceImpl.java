@@ -11,8 +11,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserServiceImpl implements UserService {
+    private final UserRepository userRepository;
+
     @Autowired
-    private UserRepository userRepository;
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public boolean validatePassword(User input) {
         User user = userRepository.findByEmail(input.getEmail());
@@ -23,7 +27,7 @@ public class UserServiceImpl implements UserService {
         return false;
     }
 
-    public User getUserById(Long id) {
+    public User getUserById(String id) {
         return userRepository.findByUserId(id);
     }
 

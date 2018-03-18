@@ -49,7 +49,7 @@ public class UserController {
     @GetMapping("/api/users/me")
     // @ResponseBody
     public Object getUser(@RequestHeader(value = USER_ID) String userId) {
-        return userService.getUserById(Long.parseLong(userId));
+        return userService.getUserById(userId);
     }
 
     @PostMapping("/api/users/me")
