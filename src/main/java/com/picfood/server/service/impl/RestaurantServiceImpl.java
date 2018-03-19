@@ -1,8 +1,6 @@
 package com.picfood.server.service.impl;
 
-import com.picfood.server.entity.Restaurant;
 import com.picfood.server.entity.SearchCondition;
-import com.picfood.server.repository.RestaurantRepository;
 import com.picfood.server.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 
