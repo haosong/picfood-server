@@ -1,5 +1,6 @@
 package com.picfood.server.service;
 
+import com.picfood.server.entity.Restaurant;
 import com.picfood.server.entity.SearchCondition;
 
 import java.util.List;
