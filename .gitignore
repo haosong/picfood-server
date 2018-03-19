@@ -23,3 +23,5 @@ dist/
 nbdist/
 .nb-gradle/
 .DS_Store
+src/main/java/com/picfood/server/repository/RestaurantRepository.java
+src/main/java/com/picfood/server/entity/Restaurant.java

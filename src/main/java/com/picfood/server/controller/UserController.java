@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
-
 import static com.picfood.server.config.JwtUtil.USER_ID;
 
 /**
@@ -27,15 +26,19 @@ public class UserController {
         this.userService = userService;
     }
 
+
     @PostMapping("/login")
     public Object login(HttpServletResponse response, @RequestBody final User user) throws IOException {
         if (userService.validatePassword(user)) {
-            String jwtToken = JwtUtil.generateToken(user.getUserId().toString());
+            System.out.println(user.getUserId());
+            String jwtToken = JwtUtil.generateToken(user.getUserId());
             // CookieUtil.create(response, "JWT-TOKEN", jwtToken, false, -1, "localhost");
+            System.out.println("Success");
             return new HashMap<String, String>() {{
                 put("token", jwtToken);
             }};
         } else {
+            System.out.println("Fail");
             return new ResponseEntity(HttpStatus.UNAUTHORIZED);
         }
     }
