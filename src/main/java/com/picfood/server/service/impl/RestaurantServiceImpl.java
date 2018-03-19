@@ -30,9 +30,14 @@ public class RestaurantServiceImpl implements RestaurantService {
         float longitude = condition.getLongitude();
         float latitude = condition.getLatitude();
         String content = condition.getContent();
+
+        //TODO search by content and ordered by distance ( calc by longitude and latitude)
+
+
         return null;
     }
+
     public Object createRestaurant(Restaurant restaurant){
-        return null;
+        return restaurant == null ? null:restaurantRepository.save(restaurant);
     }
 }

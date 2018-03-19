@@ -24,8 +24,8 @@ public class Restaurant {
     private float latitude;
     private String teleNumber;
     private Long fanCount;
-    private String bio;
-    private double averageRate;
+    private String category;
+    private double avgRate;
 
     @CreationTimestamp
     private Date created;
@@ -97,20 +97,20 @@ public class Restaurant {
         this.fanCount = fanCount;
     }
 
-    public String getBio() {
-        return bio;
+    public String getCategory() {
+        return category;
     }
 
-    public void setBio(String bio) {
-        this.bio = bio;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
-    public double getAverageRate() {
-        return averageRate;
+    public double getAvgRate() {
+        return avgRate;
     }
 
-    public void setAverageRate(double averageRate) {
-        this.averageRate = averageRate;
+    public void setAvgRate(double avgRate) {
+        this.avgRate = avgRate;
     }
 
     public Date getCreated() {
