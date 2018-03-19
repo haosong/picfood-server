@@ -13,5 +13,5 @@ public class RestaurantController {
 
     @Autowired
     public RestaurantController(RestaurantService restaurantService){this.restaurantService = restaurantService;}
-    
+
 }

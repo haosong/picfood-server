@@ -15,12 +15,12 @@ import java.util.Date;
 public class Restaurant {
     @Id @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
-    private String rastaurantId;
+    private String restaurantId;
 
     private String name;
     private String avatar;
     private String address;
-    private float longtitude;
+    private float longitude;
     private float latitude;
     private String teleNumber;
     private Long fanCount;
@@ -33,12 +33,12 @@ public class Restaurant {
     public Restaurant() {
     }
 
-    public String getRastaurantId() {
-        return rastaurantId;
+    public String getRestaurantId() {
+        return restaurantId;
     }
 
-    public void setRastaurantId(String rastaurantId) {
-        this.rastaurantId = rastaurantId;
+    public void setRestaurantId(String restaurantId) {
+        this.restaurantId = restaurantId;
     }
 
     public String getName() {
@@ -65,12 +65,12 @@ public class Restaurant {
         this.address = address;
     }
 
-    public float getLongtitude() {
-        return longtitude;
+    public float getLongitude() {
+        return longitude;
     }
 
-    public void setLongtitude(float longtitude) {
-        this.longtitude = longtitude;
+    public void setLongitude(float longitude) {
+        this.longitude = longitude;
     }
 
     public float getLatitude() {

@@ -9,6 +9,7 @@ import java.util.List;
  * Created by Shuqi on 18/3/19.
  */
 public interface RestaurantRepository  extends JpaRepository<Restaurant, String> {
-    public Restaurant findRestaurantById(String id);
-    public List<Restaurant> findRestaurantByLocation(float longitude, float latitude);
+    public Restaurant findByRestaurantId(String id);
+    public Restaurant findByName(String name);
+//    public List<Restaurant> findRestaurantByLocation(float longitude, float latitude);
 }
