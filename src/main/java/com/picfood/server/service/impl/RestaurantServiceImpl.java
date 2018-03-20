@@ -4,6 +4,7 @@ import com.picfood.server.entity.Restaurant;
 import com.picfood.server.entity.SearchCondition;
 import com.picfood.server.repository.RestaurantRepository;
 import com.picfood.server.service.RestaurantService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,10 +32,10 @@ public class RestaurantServiceImpl implements RestaurantService {
         float latitude = condition.getLatitude();
         String content = condition.getContent();
 
-        //TODO search by content and ordered by distance ( calc by longitude and latitude)
+        //TODO order by distance ( calc by longitude and latitude)
+        List<Restaurant> results = restaurantRepository.searchByContent(content);
 
-
-        return null;
+        return results;
     }
 
     public Object createRestaurant(Restaurant restaurant){
