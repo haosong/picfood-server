@@ -1,8 +1,10 @@
 package com.picfood.server.service;
+import java.util.*;
 
-import com.picfood.server.entity.PostMsg;
+import com.picfood.server.entity.Post;
 
 public interface PostService {
-    public Object createPost(String uid, PostMsg postMsg);
+    public Post createPost(String uid, Map<String, String> postMsg);
     public void deletePost(String postId);
+    public Post getPost(String postId);
 }

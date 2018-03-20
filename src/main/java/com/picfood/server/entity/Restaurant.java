@@ -16,7 +16,6 @@ public class Restaurant {
     @Id @GeneratedValue(generator="system-uuid")
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String restaurantId;
-
     private String name;
     private String avatar;
     private String address;

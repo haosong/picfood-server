@@ -16,7 +16,7 @@ public class Post {
     private String userId;
     private String imageId;
     private String content;
-    private Long likeCount;
+    private int likeCount;
 
     @CreationTimestamp
     private Date timestamp;
@@ -65,11 +65,11 @@ public class Post {
         this.content = content;
     }
 
-    public Long getLikeCount() {
+    public int getLikeCount() {
         return likeCount;
     }
 
-    public void setLikeCount(Long likeCount) {
+    public void setLikeCount(int likeCount) {
         this.likeCount = likeCount;
     }
 
