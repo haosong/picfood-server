@@ -21,9 +21,9 @@ public class PostController {
         return postService.createPost(userId, postMap);
     }
 
-    @PostMapping("/delete/post/{postId}")
-    public void deletePost(@PathVariable("postId") String postId) {
-        postService.deletePost(postId);
+    @PostMapping("/delete/post")
+    public void deletePost(@RequestBody Map<String, String> map) {
+        postService.deletePost(map.get("postId"));
     }
 
     @GetMapping("/api/post/{postId}")
