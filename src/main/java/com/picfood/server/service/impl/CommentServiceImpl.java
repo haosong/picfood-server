@@ -1,10 +1,11 @@
 package com.picfood.server.service.impl;
 
 import com.picfood.server.entity.Comment;
-import com.picfood.server.entity.Like;
+import com.picfood.server.entity.Upvote;
 import com.picfood.server.entity.Post;
+import com.picfood.server.entity.Upvote;
 import com.picfood.server.repository.CommentRepository;
-import com.picfood.server.repository.LikeRepository;
+import com.picfood.server.repository.UpvoteRepository;
 import com.picfood.server.repository.PostRepository;
 import com.picfood.server.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +14,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
-    private final LikeRepository likeRepository;
+    private final UpvoteRepository upvoteRepository;
     private final PostRepository postRepository;
     @Autowired
-    public CommentServiceImpl(CommentRepository commentRepository, LikeRepository likeRepository, PostRepository postRepository) {
+    public CommentServiceImpl(CommentRepository commentRepository, UpvoteRepository upvoteRepository, PostRepository postRepository) {
         this.commentRepository = commentRepository;
-        this.likeRepository = likeRepository;
+        this.upvoteRepository = upvoteRepository;
         this.postRepository = postRepository;
     }
 
@@ -38,16 +39,16 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.deleteByCommentId(commentId);
     }
 
-    public Like like(String uid, String postId) {
-        Like like = new Like();
-        like.setUserId(uid);
-        like.setPostId(postId);
-        return likeRepository.save(like);
+    public Upvote upvote(String uid, String postId) {
+        Upvote upvote = new Upvote();
+        upvote.setUserId(uid);
+        upvote.setPostId(postId);
+        return upvoteRepository.save(upvote);
     }
 
-    public void deleteLike(String likeId, String postId) {
-        likeRepository.deleteByLikeId(likeId);
+    public void deleteUpvote(String upvoteId, String postId) {
+        upvoteRepository.deleteByUpvoteId(upvoteId);
         Post post = postRepository.findByPostId(postId);
-        post.setLikeCount(Math.max(0, post.getLikeCount() - 1));
+        post.setUpvoteCount(Math.max(0, post.getUpvoteCount() - 1));
     }
 }

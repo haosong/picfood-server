@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * Created by Shuqi on 18/3/20.
  */
 public interface ImageRepository extends JpaRepository<Image, String>{
-    public Image findImageByID(String id);
-    public Image findImageByUrl(String url);
+    public Image findByImageId(String id);
+    public Image findByUrl(String url);
 }

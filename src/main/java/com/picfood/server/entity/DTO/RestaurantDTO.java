@@ -1,6 +1,6 @@
 package com.picfood.server.entity.DTO;
 
-import com.sun.tools.javac.util.List;
+import java.util.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;

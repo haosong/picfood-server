@@ -1,12 +1,11 @@
 package com.picfood.server.controller;
-
+import java.util.*;
 import com.picfood.server.entity.DTO.RestaurantDTO;
 import com.picfood.server.entity.Dish;
 import com.picfood.server.entity.Restaurant;
 import com.picfood.server.repository.DishRepository;
 import com.picfood.server.service.DishService;
 import com.picfood.server.service.RestaurantService;
-import com.sun.tools.javac.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.Mapping;
@@ -20,19 +19,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class RestaurantController {
     private final RestaurantService restaurantService;
-    //TODO add dishservice
     private final DishService dishService;
     @Autowired
     private ModelMapper modelMapper;
 
     @Autowired
-    public RestaurantController(RestaurantService restaurantService){this.restaurantService = restaurantService;}
+    public RestaurantController(RestaurantService restaurantService, DishService dishService){
+        this.restaurantService = restaurantService;
+        this.dishService = dishService;
+    }
 
     @PostMapping("/api/restaurants/{restaurant_id}/info")
     public Object getRestaurantInfo(@PathVariable("restaurant_id") String restaurantId){
         Restaurant restaurant = restaurantService.getRestaurantById(restaurantId);
         RestaurantDTO dto = convertToDTO(restaurant);
-        List<Dish> dishes = dishService.findNameByRestaurant();
+        List<String> dishes = dishService.findNameByRestaurant(dto.getRestaurantId());
         dto.setDishes(dishes);
         return dto;
     }
