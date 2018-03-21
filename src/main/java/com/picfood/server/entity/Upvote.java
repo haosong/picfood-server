@@ -10,12 +10,12 @@ import java.util.Date;
  * Created by Shuqi on 18/3/19.
  */
 @Entity
-@Table(name = "Like")
-public class Like {
+@Table(name = "Upvote")
+public class Upvote {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    private String likeId;
+    private String upVoteId;
 
     private String postId;
     private String userId;
@@ -23,15 +23,15 @@ public class Like {
     @CreationTimestamp
     private Date timestamp;
 
-    public Like() {
+    public Upvote() {
     }
 
-    public String getLikeId() {
-        return likeId;
+    public String getUpVoteId() {
+        return upVoteId;
     }
 
-    public void setLikeId(String likeId) {
-        this.likeId = likeId;
+    public void setUpVoteId(String upVoteId) {
+        this.upVoteId = upVoteId;
     }
 
     public String getPostId() {
