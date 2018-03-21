@@ -14,4 +14,6 @@ public interface RestaurantService {
     public List<Restaurant> getRestaurantByCondition(SearchCondition condition);
 
     public Object createRestaurant(Restaurant restaurant);
+
+    public List<Object[]> getRestaurantByLocation(Long lon, Long lat);
 }
