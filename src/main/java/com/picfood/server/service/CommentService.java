@@ -11,9 +11,6 @@ public interface CommentService {
 
     public void deleteComment(String commentId);
 
-    public Upvote upvote(String uid, String postId);
-    public void deleteUpvote(String upvoteId, String postId);
-
     List<Comment> getCommentByPostId(String postId);
 
 }

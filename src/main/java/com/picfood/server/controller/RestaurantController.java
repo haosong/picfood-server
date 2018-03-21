@@ -1,5 +1,6 @@
 package com.picfood.server.controller;
 import com.picfood.server.entity.DTO.RestaurantDTO;
+import com.picfood.server.entity.Dish;
 import com.picfood.server.entity.Restaurant;
 import com.picfood.server.service.DishService;
 import com.picfood.server.service.RestaurantService;
