@@ -1,11 +1,17 @@
 package com.picfood.server.controller;
 
+import com.picfood.server.entity.DTO.PostDTO;
+import com.picfood.server.entity.DTO.RestaurantDTO;
 import com.picfood.server.entity.Dish;
+import com.picfood.server.entity.Post;
+import com.picfood.server.entity.Restaurant;
 import com.picfood.server.service.CommentService;
 import com.picfood.server.service.DishService;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import com.picfood.server.service.PostService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +26,8 @@ public class DishController {
     private final DishService dishService;
     private final PostService postService;
     private final CommentService commentService;
+    @Autowired
+    private ModelMapper modelMapper;
     @Autowired
     public DishController(DishService dishService, PostService postService, CommentService commentService){
         this.dishService = dishService;
@@ -37,10 +45,15 @@ public class DishController {
         return postService.getImagesByDishId(id);
     }
     @GetMapping("/api/dishes/{id}/post")
-    public Object getDishPosts(@PathVariable("id") String id){
+    public List<PostDTO> getDishPosts(@PathVariable("id") String id){
 
-        //TODO 每个post里面要加一下comment数量
-        return postService.getPostByDishId(id);
+        List<Post> posts = postService.getPostByDishId(id);
+        List<PostDTO> result = posts.stream().map(this::convertToDTO).collect(Collectors.toList());
+        result.forEach(p -> p.setCommentCount(commentService.getCommentCountByPostId(p.getPostId())));
+        return result;
+    }
+    private PostDTO convertToDTO(Post post){
+        return modelMapper.map(post, PostDTO.class);
     }
 
 

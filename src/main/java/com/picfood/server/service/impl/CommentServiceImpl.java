@@ -43,4 +43,9 @@ public class CommentServiceImpl implements CommentService {
         return commentRepository.findAllByPostId(postId);
     }
 
+    @Override
+    public long getCommentCountByPostId(String postId) {
+        return commentRepository.getCommentCountByPostId(postId);
+    }
+
 }
