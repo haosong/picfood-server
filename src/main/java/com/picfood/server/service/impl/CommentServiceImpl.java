@@ -7,19 +7,22 @@ import com.picfood.server.entity.Post;
 import com.picfood.server.entity.Upvote;
 import com.picfood.server.repository.CommentRepository;
 import com.picfood.server.repository.PostRepository;
+import com.picfood.server.repository.UpvoteRepository;
 import com.picfood.server.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
+    private final UpvoteRepository upvoteRepository;
+    private final PostRepository postRepository;
 
     @Autowired
-    public CommentServiceImpl(CommentRepository commentRepository) {
+    public CommentServiceImpl(CommentRepository commentRepository, UpvoteRepository upvoteRepository, PostRepository postRepository) {
         this.commentRepository = commentRepository;
+        this.upvoteRepository = upvoteRepository;
+        this.postRepository = postRepository;
     }
 
     public Comment makeComment(String uid, String postId, String content) {
