@@ -41,7 +41,7 @@ public class PostServiceImpl implements PostService {
             post.setImageId(postMsg.get("image"));
         }
         post.setUserId(uid);
-        post.setLikeCount(0);
+        post.setUpvoteCount(0);
         return postRepository.save(post);
     }
 

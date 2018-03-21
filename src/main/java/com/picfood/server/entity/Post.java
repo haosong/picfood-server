@@ -16,7 +16,7 @@ public class Post {
     private String userId;
     private String imageId;
     private String content;
-    private int likeCount;
+    private int upvoteCount;
 
     @CreationTimestamp
     private Date timestamp;
@@ -65,12 +65,12 @@ public class Post {
         this.content = content;
     }
 
-    public int getLikeCount() {
-        return likeCount;
+    public int getUpvoteCount() {
+        return upvoteCount;
     }
 
-    public void setLikeCount(int likeCount) {
-        this.likeCount = likeCount;
+    public void setUpvoteCount(int upvoteCount) {
+        this.upvoteCount = upvoteCount;
     }
 
     public Date getTimestamp() {

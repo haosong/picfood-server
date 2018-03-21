@@ -3,6 +3,7 @@ package com.picfood.server.controller;
 import java.util.*;
 
 import com.picfood.server.entity.Comment;
+
 import com.picfood.server.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -33,5 +34,4 @@ public class CommentController {
     public Comment getComment(@PathVariable("commentId") String commentId) {
         return commentService.getComment(commentId);
     }
-
 }

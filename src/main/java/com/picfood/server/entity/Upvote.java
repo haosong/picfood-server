@@ -15,7 +15,8 @@ public class Upvote {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    private String upVoteId;
+
+    private String upvoteId;
 
     private String postId;
     private String userId;
@@ -26,12 +27,12 @@ public class Upvote {
     public Upvote() {
     }
 
-    public String getUpVoteId() {
-        return upVoteId;
+    public String getUpvoteId() {
+        return upvoteId;
     }
 
-    public void setUpVoteId(String upVoteId) {
-        this.upVoteId = upVoteId;
+    public void setUpvoteId(String UpvoteId) {
+        this.upvoteId = upvoteId;
     }
 
     public String getPostId() {

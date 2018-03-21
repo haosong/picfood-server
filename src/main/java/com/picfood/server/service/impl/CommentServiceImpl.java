@@ -1,7 +1,9 @@
 package com.picfood.server.service.impl;
 
 import com.picfood.server.entity.Comment;
+
 import com.picfood.server.entity.Post;
+import com.picfood.server.entity.Upvote;
 import com.picfood.server.repository.CommentRepository;
 import com.picfood.server.repository.PostRepository;
 import com.picfood.server.service.CommentService;

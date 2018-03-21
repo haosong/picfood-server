@@ -4,5 +4,5 @@ import com.picfood.server.entity.Upvote;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UpvoteRepository extends JpaRepository<Upvote, String> {
-    public void deleteByUpVoteId(String upvoteId);
+    public void deleteByUpvoteId(String upvoteId);
 }

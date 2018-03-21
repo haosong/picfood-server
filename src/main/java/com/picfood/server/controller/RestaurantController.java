@@ -1,10 +1,15 @@
 package com.picfood.server.controller;
-
+import com.picfood.server.entity.DTO.RestaurantDTO;
+import com.picfood.server.entity.Restaurant;
+import com.picfood.server.service.DishService;
 import com.picfood.server.service.RestaurantService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * Created by Shuqi on 18/3/18.
@@ -12,13 +17,28 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class RestaurantController {
     private final RestaurantService restaurantService;
+    private final DishService dishService;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Autowired
-    public RestaurantController(RestaurantService restaurantService){this.restaurantService = restaurantService;}
+    public RestaurantController(RestaurantService restaurantService, DishService dishService){
+        this.restaurantService = restaurantService;
+        this.dishService = dishService;
+    }
 
     @PostMapping("/api/restaurants/{restaurant_id}/info")
     public Object getRestaurantInfo(@PathVariable("restaurant_id") String restaurantId){
-        return restaurantService.getRestaurantById(restaurantId);
+        Restaurant restaurant = restaurantService.getRestaurantById(restaurantId);
+        RestaurantDTO dto = convertToDTO(restaurant);
+        List<String> dishes = dishService.findNameByRestaurant(dto.getRestaurantId());
+        dto.setDishes(dishes);
+        return dto;
+    }
+
+    private RestaurantDTO convertToDTO(Restaurant restaurant){
+        return modelMapper.map(restaurant, RestaurantDTO.class);
+
     }
 
 }

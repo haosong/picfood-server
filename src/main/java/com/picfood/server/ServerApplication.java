@@ -1,6 +1,7 @@
 package com.picfood.server;
 
 import com.picfood.server.config.JwtAuthenticationFilter;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
@@ -16,6 +17,10 @@ public class ServerApplication {
         JwtAuthenticationFilter filter = new JwtAuthenticationFilter();
         registrationBean.setFilter(filter);
         return registrationBean;
+    }
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
     }
 
     public static void main(String[] args) {
