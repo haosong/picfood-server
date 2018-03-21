@@ -1,5 +1,6 @@
 package com.picfood.server.service.impl;
 
+import java.util.List;
 import com.picfood.server.entity.Comment;
 
 import com.picfood.server.entity.Post;
@@ -35,6 +36,25 @@ public class CommentServiceImpl implements CommentService {
 
     public void deleteComment(String commentId) {
         commentRepository.deleteByCommentId(commentId);
+    }
+
+
+    public Upvote upvote(String uid, String postId) {
+        Upvote upvote = new Upvote();
+        upvote.setUserId(uid);
+        upvote.setPostId(postId);
+        return upvoteRepository.save(upvote);
+    }
+
+    public void deleteUpvote(String upvoteId, String postId) {
+        upvoteRepository.deleteByUpvoteId(upvoteId);
+        Post post = postRepository.findByPostId(postId);
+        post.setUpvoteCount(Math.max(0, post.getUpvoteCount() - 1));
+    }
+
+    @Override
+    public List<Comment> getCommentByPostId(String postId) {
+        return commentRepository.findAllByPostId(postId);
     }
 
 }

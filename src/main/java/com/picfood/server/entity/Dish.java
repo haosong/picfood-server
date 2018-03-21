@@ -13,11 +13,19 @@ public class Dish {
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String dishId;
     private String name;
-
+    private String avatar;
     private String category;
     private String restaurantId;
 
     public Dish() {
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getDishId() {
