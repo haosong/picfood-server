@@ -36,6 +36,12 @@ public class DishController {
     public Object getDishImages(@PathVariable("id") String id){
         return postService.getImagesByDishId(id);
     }
+    @GetMapping("/api/dishes/{id}/post")
+    public Object getDishPosts(@PathVariable("id") String id){
+
+        //TODO 每个post里面要加一下comment数量
+        return postService.getPostByDishId(id);
+    }
 
 
 

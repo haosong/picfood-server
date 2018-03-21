@@ -13,4 +13,5 @@ public interface PostRepository extends JpaRepository<Post, String> {
     @Query("select p.imageId from Post as p where p.dishId = :dishId")
     public List<String> findImagesByDishId(@Param("dishId") String id);
 
+    public List<Post> findAllByDishId(String dishId);
 }

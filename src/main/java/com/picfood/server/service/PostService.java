@@ -9,5 +9,7 @@ public interface PostService {
     public void deletePost(String postId);
     public Post getPost(String postId);
 
-    List<String> getImagesByDishId(String dishId);
+    List<String> getImagesUrlsByDishId(String dishId);
+    List<Image> getImagesByDishId(String dishId);
+    List<Post> getPostByDishId(String dishId);
 }

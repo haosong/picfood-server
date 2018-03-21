@@ -5,6 +5,7 @@ import com.picfood.server.entity.Dish;
 import com.picfood.server.entity.Image;
 import com.picfood.server.entity.Post;
 import com.picfood.server.repository.DishRepository;
+import com.picfood.server.repository.ImageRepository;
 import com.picfood.server.repository.PostRepository;
 import com.picfood.server.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +16,12 @@ public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
     private final DishRepository dishRepository;
-
+    private final ImageRepository imageRepository;
     @Autowired
-    public PostServiceImpl(PostRepository postRepository, DishRepository dishRepository) {
+    public PostServiceImpl(PostRepository postRepository, DishRepository dishRepository, ImageRepository imageRepository) {
         this.postRepository = postRepository;
         this.dishRepository = dishRepository;
+        this.imageRepository = imageRepository;
     }
 
     public Post createPost(String uid, Map<String, String> postMsg) {
@@ -54,7 +56,16 @@ public class PostServiceImpl implements PostService {
         return postRepository.findByPostId(postId);
     }
 
-    public List<String> getImagesByDishId(String dishId) {
+    public List<String> getImagesUrlsByDishId(String dishId) {
         return postRepository.findImagesByDishId(dishId);
+    }
+
+    public List<Image> getImagesByDishId(String dishId){
+        List<String> imageUrls = getImagesUrlsByDishId(dishId);
+        return imageRepository.findAllById(imageUrls);
+    }
+
+    public List<Post> getPostByDishId(String dishId) {
+        return postRepository.findAllByDishId(dishId);
     }
 }
