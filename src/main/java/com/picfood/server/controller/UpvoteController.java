@@ -27,7 +27,7 @@ public class UpvoteController {
     }
 
     @PostMapping("/delete/upvote")
-    public void deleteLike(@RequestBody Map<String, String> map) {
+    public void deleteUpvote(@RequestBody Map<String, String> map) {
         upvoteService.deleteUpvote(map.get("upvoteId"), map.get("postId"));
     }
 }

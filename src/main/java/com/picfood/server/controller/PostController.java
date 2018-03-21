@@ -37,8 +37,4 @@ public class PostController {
         return postService.getPost(postId);
     }
 
-    @GetMapping("/api/post/{postId}/comments")
-    public List<Comment> getCommentsByPostId(@PathVariable("postId") String postId){
-        return commentService.getCommentByPostId(postId);
-    }
 }
