@@ -10,6 +10,8 @@ import com.picfood.server.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
@@ -27,8 +29,8 @@ public class CommentServiceImpl implements CommentService {
         return commentRepository.save(comment);
     }
 
-    public Comment getComment(String commentId) {
-        return commentRepository.findByCommentId(commentId);
+    public List<Comment> getComment(String postId) {
+        return commentRepository.findAllByPostId(postId);
     }
 
     public void deleteComment(String commentId) {

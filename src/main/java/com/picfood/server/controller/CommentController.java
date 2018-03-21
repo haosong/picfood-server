@@ -30,8 +30,8 @@ public class CommentController {
         commentService.deleteComment(map.get("commentId"));
     }
 
-    @GetMapping("/api/comment/{commentId}")
-    public Comment getComment(@PathVariable("commentId") String commentId) {
-        return commentService.getComment(commentId);
+    @GetMapping("/api/comments/{postId}")
+    public List<Comment> getComment(@PathVariable("postId") String postId) {
+        return commentService.getComment(postId);
     }
 }

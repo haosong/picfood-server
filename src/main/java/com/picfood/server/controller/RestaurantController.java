@@ -38,7 +38,6 @@ public class RestaurantController {
 
     private RestaurantDTO convertToDTO(Restaurant restaurant){
         return modelMapper.map(restaurant, RestaurantDTO.class);
-
     }
 
 }
