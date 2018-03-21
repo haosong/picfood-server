@@ -2,6 +2,7 @@ package com.picfood.server.service.impl;
 
 import java.util.*;
 import com.picfood.server.entity.Dish;
+import com.picfood.server.entity.Image;
 import com.picfood.server.entity.Post;
 import com.picfood.server.repository.DishRepository;
 import com.picfood.server.repository.PostRepository;
@@ -51,5 +52,9 @@ public class PostServiceImpl implements PostService {
 
     public Post getPost(String postId) {
         return postRepository.findByPostId(postId);
+    }
+
+    public List<String> getImagesByDishId(String dishId) {
+        return postRepository.findImagesByDishId(dishId);
     }
 }

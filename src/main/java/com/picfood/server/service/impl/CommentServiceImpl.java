@@ -1,5 +1,6 @@
 package com.picfood.server.service.impl;
 
+import java.util.List;
 import com.picfood.server.entity.Comment;
 import com.picfood.server.entity.Upvote;
 import com.picfood.server.entity.Post;
@@ -10,6 +11,8 @@ import com.picfood.server.repository.PostRepository;
 import com.picfood.server.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -51,4 +54,10 @@ public class CommentServiceImpl implements CommentService {
         Post post = postRepository.findByPostId(postId);
         post.setUpvoteCount(Math.max(0, post.getUpvoteCount() - 1));
     }
+
+    @Override
+    public List<Comment> getCommentByPostId(String postId) {
+        return commentRepository.findAllByPostId(postId);
+    }
+
 }
