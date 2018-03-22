@@ -9,5 +9,4 @@ public interface CommentRepository extends JpaRepository<Comment, String> {
     public Comment findByCommentId(String commentId);
     public void deleteByCommentId(String commentId);
 
-
 }
