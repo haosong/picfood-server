@@ -8,7 +8,7 @@ public class CommentDTO {
     private String postId;
     private String commenterId;
     private String commenter;
-    private String commeterAvatar;
+    private String commenterAvatar;
     private String content;
     private Date time;
 
@@ -45,12 +45,12 @@ public class CommentDTO {
         this.commenter = commenter;
     }
 
-    public String getCommeterAvatar() {
-        return commeterAvatar;
+    public String getCommenterAvatar() {
+        return commenterAvatar;
     }
 
-    public void setCommeterAvatar(String commeterAvatar) {
-        this.commeterAvatar = commeterAvatar;
+    public void setCommenterAvatar(String commenterAvatar) {
+        this.commenterAvatar = commenterAvatar;
     }
 
     public String getContent() {

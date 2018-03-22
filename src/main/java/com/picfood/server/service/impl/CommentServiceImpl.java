@@ -52,7 +52,7 @@ public class CommentServiceImpl implements CommentService {
         CommentDTO commentDTO = modelMapper.map(comment, CommentDTO.class);
         User commenter = userRepository.findByUserId(comment.getCommenterId());
         commentDTO.setCommenter(commenter.getName());
-        commentDTO.setCommeterAvatar(commenter.getAvatar());
+        commentDTO.setCommenterAvatar(commenter.getAvatar());
         return commentDTO;
     }
 
