@@ -1,28 +1,16 @@
-package com.picfood.server.entity;
+package com.picfood.server.entity.DTO;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
 import java.util.Date;
 
-@Entity
-@Table(name = "Comment")
-public class Comment {
-    @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+public class CommentDTO {
     private String commentId;
     private String postId;
     private String commenterId;
+    private String commenter;
+    private String commenterAvatar;
     private String content;
-
-    @CreationTimestamp
     private Date time;
-
-    public Comment() {
-
-    }
 
 
     public String getCommentId() {
@@ -41,20 +29,36 @@ public class Comment {
         this.postId = postId;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
     public String getCommenterId() {
         return commenterId;
     }
 
     public void setCommenterId(String commenterId) {
         this.commenterId = commenterId;
+    }
+
+    public String getCommenter() {
+        return commenter;
+    }
+
+    public void setCommenter(String commenter) {
+        this.commenter = commenter;
+    }
+
+    public String getCommenterAvatar() {
+        return commenterAvatar;
+    }
+
+    public void setCommenterAvatar(String commenterAvatar) {
+        this.commenterAvatar = commenterAvatar;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Date getTime() {

@@ -1,5 +1,4 @@
 package com.picfood.server.controller;
-import com.picfood.server.config.GeoHash;
 import com.picfood.server.entity.DTO.RestaurantDTO;
 import com.picfood.server.entity.Dish;
 import com.picfood.server.entity.Restaurant;

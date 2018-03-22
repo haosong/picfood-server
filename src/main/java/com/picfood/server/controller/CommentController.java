@@ -4,6 +4,7 @@ import java.util.*;
 
 import com.picfood.server.entity.Comment;
 
+import com.picfood.server.entity.DTO.CommentDTO;
 import com.picfood.server.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +22,9 @@ public class CommentController {
     }
 
     @PostMapping("/comment")
-    public Object makeComment(@RequestHeader(value = USER_ID) String userId, @RequestBody Map<String, String> commentMap) {
-        return commentService.makeComment(userId, commentMap.get("postId"), commentMap.get("content"));
+    public CommentDTO makeComment(@RequestHeader(value = USER_ID) String userId, @RequestBody Map<String, String> commentMap) {
+        Comment comment = commentService.makeComment(userId, commentMap.get("postId"), commentMap.get("content"));
+        return commentService.convertToDTO(comment);
     }
 
     @PostMapping("/delete/comment")
@@ -31,7 +33,7 @@ public class CommentController {
     }
 
     @GetMapping("/api/comments/{postId}")
-    public List<Comment> getComment(@PathVariable("postId") String postId) {
-        return commentService.getComment(postId);
+    public List<CommentDTO> getComments(@PathVariable("postId") String postId) {
+        return commentService.getComments(postId);
     }
 }

@@ -25,14 +25,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class DishController {
     private final DishService dishService;
     private final PostService postService;
-    private final CommentService commentService;
-    @Autowired
-    private ModelMapper modelMapper;
+
     @Autowired
     public DishController(DishService dishService, PostService postService, CommentService commentService){
         this.dishService = dishService;
         this.postService = postService;
-        this.commentService = commentService;
     }
 
     @GetMapping("/api/dishes/{id}/info")
@@ -46,16 +43,8 @@ public class DishController {
     }
     @GetMapping("/api/dishes/{id}/post")
     public List<PostDTO> getDishPosts(@PathVariable("id") String id){
-
         List<Post> posts = postService.getPostByDishId(id);
-        List<PostDTO> result = posts.stream().map(this::convertToDTO).collect(Collectors.toList());
-        result.forEach(p -> p.setCommentCount(commentService.getCommentCountByPostId(p.getPostId())));
-        return result;
+        return posts.stream().map(p -> postService.getPost(p.getPostId(), false)).collect(Collectors.toList());
     }
-    private PostDTO convertToDTO(Post post){
-        return modelMapper.map(post, PostDTO.class);
-    }
-
-
 
 }

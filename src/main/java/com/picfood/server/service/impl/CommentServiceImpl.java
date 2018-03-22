@@ -1,50 +1,65 @@
 package com.picfood.server.service.impl;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import com.picfood.server.entity.Comment;
 
+import com.picfood.server.entity.DTO.CommentDTO;
 import com.picfood.server.entity.Post;
 import com.picfood.server.entity.Upvote;
+import com.picfood.server.entity.User;
 import com.picfood.server.repository.CommentRepository;
 import com.picfood.server.repository.PostRepository;
 import com.picfood.server.repository.UpvoteRepository;
+import com.picfood.server.repository.UserRepository;
 import com.picfood.server.service.CommentService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
+@Transactional
 public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
-    private final UpvoteRepository upvoteRepository;
-    private final PostRepository postRepository;
 
     @Autowired
-    public CommentServiceImpl(CommentRepository commentRepository, UpvoteRepository upvoteRepository, PostRepository postRepository) {
+    private UserRepository userRepository;
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @Autowired
+    public CommentServiceImpl(CommentRepository commentRepository) {
         this.commentRepository = commentRepository;
-        this.upvoteRepository = upvoteRepository;
-        this.postRepository = postRepository;
     }
 
     public Comment makeComment(String uid, String postId, String content) {
         Comment comment = new Comment();
         comment.setContent(content);
-        comment.setUserId(uid);
+        comment.setCommenterId(uid);
         comment.setPostId(postId);
         return commentRepository.save(comment);
     }
 
-    public List<Comment> getComment(String postId) {
-        return commentRepository.findAllByPostId(postId);
+    public List<CommentDTO> getComments(String postId) {
+        List<Comment> comments = commentRepository.findAllByPostId(postId);
+        return comments.stream().map(this::convertToDTO).collect(Collectors.toList());
+    }
+
+    public CommentDTO convertToDTO(Comment comment) {
+        CommentDTO commentDTO = modelMapper.map(comment, CommentDTO.class);
+        User commenter = userRepository.findByUserId(comment.getCommenterId());
+        commentDTO.setCommenter(commenter.getName());
+        commentDTO.setCommenterAvatar(commenter.getAvatar());
+        return commentDTO;
     }
 
     public void deleteComment(String commentId) {
         commentRepository.deleteByCommentId(commentId);
     }
 
-    @Override
-    public List<Comment> getCommentByPostId(String postId) {
-        return commentRepository.findAllByPostId(postId);
-    }
 
     @Override
     public long getCommentCountByPostId(String postId) {

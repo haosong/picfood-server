@@ -1,7 +1,6 @@
 package com.picfood.server.entity.DTO;
 
-import org.hibernate.annotations.CreationTimestamp;
-
+import java.util.*;
 import java.util.Date;
 
 /**
@@ -10,14 +9,17 @@ import java.util.Date;
 public class PostDTO {
     private String postId;
     private String dishId;
-    private String userId;
+    private String restaurantName;
+    private String dishName;
+    private String creatorId;
+    private String creator;
+    private String creatorAvater;
     private String imageId;
+    private String imageUrl;
     private String content;
     private int upvoteCount;
-    private long commentCount;
-
-    @CreationTimestamp
-    private Date timestamp;
+    private Date time;
+    private List<CommentDTO> comments;
 
     public PostDTO() {
     }
@@ -38,13 +40,6 @@ public class PostDTO {
         this.dishId = dishId;
     }
 
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
     public String getImageId() {
         return imageId;
@@ -70,19 +65,67 @@ public class PostDTO {
         this.upvoteCount = upvoteCount;
     }
 
-    public long getCommentCount() {
-        return commentCount;
+    public String getRestaurantName() {
+        return restaurantName;
     }
 
-    public void setCommentCount(long commentCount) {
-        this.commentCount = commentCount;
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
     }
 
-    public Date getTimestamp() {
-        return timestamp;
+    public String getDishName() {
+        return dishName;
     }
 
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
+    public void setDishName(String dishName) {
+        this.dishName = dishName;
+    }
+
+    public String getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(String creatorId) {
+        this.creatorId = creatorId;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public String getCreatorAvater() {
+        return creatorAvater;
+    }
+
+    public void setCreatorAvater(String creatorAvater) {
+        this.creatorAvater = creatorAvater;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
+
+    public List<CommentDTO> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentDTO> comments) {
+        this.comments = comments;
     }
 }
