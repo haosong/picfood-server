@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Created by Shuqi on 18/3/18.
@@ -41,5 +42,11 @@ public class RestaurantController {
     private RestaurantDTO convertToDTO(Restaurant restaurant){
         return modelMapper.map(restaurant, RestaurantDTO.class);
     }
+
+    @GetMapping("/api/restaurants/{location}")
+    public List<Object[]> getNearRestaurant(@PathVariable("location") Object location){
+       return restaurantService.getRestaurantByLocation(1L,1L);
+    }
+
 
 }

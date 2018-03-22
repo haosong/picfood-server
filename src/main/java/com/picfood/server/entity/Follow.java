@@ -1,12 +1,8 @@
 package com.picfood.server.entity;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -14,14 +10,13 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "Follow")
+@IdClass(FollowId.class)
 public class Follow {
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    private String followId;
+    private String follower;
 
-    private String followerId;
-    private String followeeId;
+    @Id
+    private String followee;
 
     @CreationTimestamp
     private Date timestamp;
@@ -29,28 +24,25 @@ public class Follow {
     public Follow() {
     }
 
-    public String getFollowId() {
-        return followId;
+    public Follow(String follower, String followee) {
+        this.follower = follower;
+        this.followee = followee;
     }
 
-    public void setFollowId(String followId) {
-        this.followId = followId;
+    public String getFollower() {
+        return follower;
     }
 
-    public String getFollowerId() {
-        return followerId;
+    public void setFollower(String follower) {
+        this.follower = follower;
     }
 
-    public void setFollowerId(String followerId) {
-        this.followerId = followerId;
+    public String getFollowee() {
+        return followee;
     }
 
-    public String getFolloweeId() {
-        return followeeId;
-    }
-
-    public void setFolloweeId(String followeeId) {
-        this.followeeId = followeeId;
+    public void setFollowee(String followee) {
+        this.followee = followee;
     }
 
     public Date getTimestamp() {
@@ -60,4 +52,12 @@ public class Follow {
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
     }
+
+    // public Date getTimestamp() {
+    //     return timestamp;
+    // }
+    //
+    // public void setTimestamp(Date timestamp) {
+    //     this.timestamp = timestamp;
+    // }
 }

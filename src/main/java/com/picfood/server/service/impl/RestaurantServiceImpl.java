@@ -40,4 +40,9 @@ public class RestaurantServiceImpl implements RestaurantService {
     public Object createRestaurant(Restaurant restaurant){
         return restaurant == null ? null:restaurantRepository.save(restaurant);
     }
+
+    @Override
+    public List<Object[]> getRestaurantByLocation(Long lon, Long lat) {
+        return restaurantRepository.findRestaurantByLocation(lon,lat);
+    }
 }

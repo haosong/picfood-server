@@ -7,12 +7,12 @@ import com.picfood.server.entity.Post;
 import com.picfood.server.entity.Upvote;
 import com.picfood.server.repository.CommentRepository;
 import com.picfood.server.repository.PostRepository;
+import com.picfood.server.repository.UpvoteRepository;
 import com.picfood.server.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 @Service
 @Transactional
@@ -43,6 +43,11 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<Comment> getCommentByPostId(String postId) {
         return commentRepository.findAllByPostId(postId);
+    }
+
+    @Override
+    public long getCommentCountByPostId(String postId) {
+        return commentRepository.getCommentCountByPostId(postId);
     }
 
 }
