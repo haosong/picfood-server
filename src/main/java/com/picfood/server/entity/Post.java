@@ -13,13 +13,13 @@ public class Post {
     @GenericGenerator(name="system-uuid", strategy = "uuid")
     private String postId;
     private String dishId;
-    private String userId;
+    private String creatorId;
     private String imageId;
     private String content;
     private int upvoteCount;
 
     @CreationTimestamp
-    private Date timestamp;
+    private Date time;
 
     public Post() {
 
@@ -39,14 +39,6 @@ public class Post {
 
     public void setDishId(String dishId) {
         this.dishId = dishId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     public String getImageId() {
@@ -73,12 +65,19 @@ public class Post {
         this.upvoteCount = upvoteCount;
     }
 
-    public Date getTimestamp() {
-        return timestamp;
+    public String getCreatorId() {
+        return creatorId;
     }
 
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
+    public void setCreatorId(String creatorId) {
+        this.creatorId = creatorId;
     }
 
+    public Date getTime() {
+        return time;
+    }
+
+    public void setTime(Date time) {
+        this.time = time;
+    }
 }
