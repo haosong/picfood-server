@@ -1,11 +1,15 @@
 package com.picfood.server.service.impl;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.*;
 
 import com.picfood.server.entity.*;
 import com.picfood.server.entity.DTO.CommentDTO;
 import com.picfood.server.entity.DTO.PostDTO;
 import com.picfood.server.repository.*;
+import com.picfood.server.service.AmazonClient;
 import com.picfood.server.service.CommentService;
 import com.picfood.server.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +34,7 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private CommentRepository commentRepository;
+    private AmazonClient amazonClient;
     @Autowired
     private ModelMapper modelMapper;
     @Autowired
@@ -52,21 +56,24 @@ public class PostServiceImpl implements PostService {
         Post post = new Post();
         post.setContent(postMsg.get("content"));
         post.setDishId(dish.getDishId());
-        if (postMsg.get("image") != null) {
-            //TO-DO: get image url
-            String imageUrl = "url:" + postMsg.get("image");
-            Image image = new Image();
-            image.setUrl(imageUrl);
-            imageRepository.save(image);
-            post.setImageId(image.getImageId());
-        }
         post.setCreatorId(uid);
         post.setUpvoteCount(0);
+        String imageUrl = postMsg.get("imageUrl");
+        if (imageUrl != null) {
+            Image image = new Image();
+            image.setUrl(imageUrl);
+            post.setImageId(image.getImageId());
+            imageRepository.save(image);
+        }
         postRepository.save(post);
         return getPost(post.getPostId(), false);
     }
 
     public void deletePost(String postId) {
+        Post post = postRepository.findByPostId(postId);
+        Image image = imageRepository.findByImageId(post.getImageId());
+        amazonClient.deleteFileFromS3Bucket(image.getUrl());
+        imageRepository.deleteByImageId(image.getImageId());
         postRepository.deleteByPostId(postId);
     }
 

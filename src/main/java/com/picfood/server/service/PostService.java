@@ -1,4 +1,5 @@
 package com.picfood.server.service;
+import java.io.IOException;
 import java.util.*;
 
 import com.picfood.server.entity.DTO.PostDTO;
