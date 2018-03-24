@@ -11,7 +11,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "Upvote")
-public class Upvote {
+public class Upvote extends Timeline {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")

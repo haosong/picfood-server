@@ -12,5 +12,5 @@ public interface UserService {
 
     public User updateUser(User user);
 
-    public Object createUser(User user);
+    public User createUser(User user);
 }

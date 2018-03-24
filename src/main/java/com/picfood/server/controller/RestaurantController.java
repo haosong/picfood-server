@@ -36,6 +36,12 @@ public class RestaurantController {
         dto.setDishes(dishes);
         return dto;
     }
+
+    @GetMapping("/api/restaurants/{id}/category")
+    public List<String> getAllDishesCategory(@PathVariable("id") String rid) {
+        return restaurantService.getAllDishesCategory(rid);
+    }
+
     @GetMapping("/api/restaurants/{id}/dishes")
     public List<Dish> getDishesByRestaurant(@PathVariable("id") String rid){
         return dishService.findByRestaurant(rid);
@@ -45,13 +51,14 @@ public class RestaurantController {
     }
 
     @GetMapping("/api/restaurants")
+
     public List<Restaurant> getNearRestaurant(@RequestParam("lon") Double lon, @RequestParam("lat") Double lat){
        return restaurantService.getRestaurantByLocation(lon,lat);
     }
 
     @GetMapping("/search/restaurants")
-    public List<Restaurant> searchRestaurants( @RequestParam(value = "keyword", required = true) String keyword, @RequestParam(value = "sorting", required = true) String sorting,
-                                               @RequestParam(value = "lon", required = false) Double lon, @RequestParam(value = "lat", required = false) Double lat) {
+    public List<Restaurant> searchRestaurants( @RequestParam(value = "keyword") String keyword, @RequestParam(value = "sorting") String sorting,
+                                               @RequestParam(value = "lon") Double lon, @RequestParam(value = "lat") Double lat) {
         List<Restaurant> res = restaurantService.searchRestaurants(keyword);
         if (sorting.equals("distance")) {
             res.sort((a, b) -> {

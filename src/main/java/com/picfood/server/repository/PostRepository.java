@@ -14,4 +14,5 @@ public interface PostRepository extends JpaRepository<Post, String> {
     public List<String> findImagesByDishId(@Param("dishId") String id);
 
     public List<Post> findAllByDishId(String dishId);
+    public List<Post> findAllByCreatorId(String userId);
 }

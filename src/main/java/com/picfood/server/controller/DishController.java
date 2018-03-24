@@ -49,8 +49,8 @@ public class DishController {
     }
 
     @GetMapping("/search/dishes")
-    public List<Dish> searchDishes( @RequestParam(value = "keyword", required = true) String keyword, @RequestParam(value = "sorting", required = true) String sorting,
-                                               @RequestParam(value = "lon", required = false) Double lon, @RequestParam(value = "lat", required = false) Double lat) {
+    public List<Dish> searchDishes( @RequestParam(value = "keyword") String keyword, @RequestParam(value = "sorting") String sorting,
+                                               @RequestParam(value = "lon") Double lon, @RequestParam(value = "lat") Double lat) {
         List<Dish> res = dishService.searchDishes(keyword);
         if (sorting.equals("distance")) {
             res.sort((a, b) -> {

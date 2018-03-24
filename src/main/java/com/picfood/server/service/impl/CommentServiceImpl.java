@@ -66,4 +66,8 @@ public class CommentServiceImpl implements CommentService {
         return commentRepository.getCommentCountByPostId(postId);
     }
 
+    public List<Comment> getCommentByUserId(String userId) {
+        return commentRepository.findAllByCommenterId(userId);
+    }
+
 }

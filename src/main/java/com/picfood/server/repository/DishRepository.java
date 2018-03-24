@@ -22,4 +22,7 @@ public interface DishRepository extends JpaRepository<Dish, String> {
 
     public List<Dish> findByNameContainingOrCategoryContaining(String word1, String word2);
 
+    @Query("select distinct d.category from Dish as d where d.restaurantId = :id")
+    public List<String> findDistinctCategoryByRestaurantId(@Param("id") String id);
+
 }

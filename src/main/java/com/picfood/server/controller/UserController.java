@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
+
 import static com.picfood.server.config.JwtUtil.USER_ID;
 
 /**
@@ -46,7 +47,17 @@ public class UserController {
     @PostMapping("/register")
     public Object register(@RequestBody final User user) {
         // Validate Email and Password. Can be done in front-end.
-        return userService.createUser(user);
+        User createdUser = userService.createUser(user);
+        if (null == createdUser) {
+            return new HashMap<String, String>() {{
+                put("error", "Email existed");
+            }};
+        } else {
+            String jwtToken = JwtUtil.generateToken(createdUser.getUserId());
+            return new HashMap<String, String>() {{
+                put("token", jwtToken);
+            }};
+        }
     }
 
     @GetMapping("/api/users/me")

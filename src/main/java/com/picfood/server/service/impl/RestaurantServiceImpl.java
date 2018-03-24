@@ -2,6 +2,7 @@ package com.picfood.server.service.impl;
 
 import com.picfood.server.entity.Restaurant;
 import com.picfood.server.entity.SearchCondition;
+import com.picfood.server.repository.DishRepository;
 import com.picfood.server.repository.RestaurantRepository;
 import com.picfood.server.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,13 @@ import java.util.List;
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
     private final RestaurantRepository restaurantRepository;
+    private final DishRepository dishRepository;
 
     @Autowired
-    public RestaurantServiceImpl(RestaurantRepository restaurantRepository){this.restaurantRepository = restaurantRepository;}
-
+    public RestaurantServiceImpl(RestaurantRepository restaurantRepository, DishRepository dishRepository){
+        this.restaurantRepository = restaurantRepository;
+        this.dishRepository = dishRepository;
+    }
 
     @Override
     public Restaurant getRestaurantById(String id) {
@@ -42,6 +46,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
+
     public List<Restaurant> getRestaurantByLocation(double lon, double lat) {
         return restaurantRepository.findRestaurantByLocation(lon,lat);
     }
@@ -49,4 +54,9 @@ public class RestaurantServiceImpl implements RestaurantService {
     public List<Restaurant> searchRestaurants(String keyword) {
         return restaurantRepository.findAllByNameContainingOrCategoryContaining(keyword, keyword);
     }
+
+    public List<String> getAllDishesCategory(String rid) {
+        return dishRepository.findDistinctCategoryByRestaurantId(rid);
+    }
+
 }
