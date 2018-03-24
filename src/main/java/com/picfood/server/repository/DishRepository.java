@@ -20,4 +20,6 @@ public interface DishRepository extends JpaRepository<Dish, String> {
     @Query("select d.name from Dish as d where d.restaurantId = :id")
     public List<String> findNameByRestaurantId(@Param("id") String id);
 
+    public List<Dish> findByNameContainingOrCategory(String word1, String word2);
+
 }

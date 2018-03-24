@@ -52,18 +52,24 @@ public class PostServiceImpl implements PostService {
             dish.setCategory(postMsg.get("category"));
             dishRepository.save(dish);
         }
-
+        //create post
         Post post = new Post();
         post.setContent(postMsg.get("content"));
         post.setDishId(dish.getDishId());
         post.setCreatorId(uid);
         post.setUpvoteCount(0);
+        int rate = Integer.parseInt(postMsg.get("rate"));
+        post.setRate(rate);
+        //update dish rate
+        dish.setAvgRate((dish.getAvgRate() * dish.getPostNum() + rate) / (dish.getPostNum() + 1));
+        dish.setPostNum(dish.getPostNum() + 1);
+        //save image
         String imageUrl = postMsg.get("imageUrl");
         if (imageUrl != null) {
             Image image = new Image();
             image.setUrl(imageUrl);
-            post.setImageId(image.getImageId());
             imageRepository.save(image);
+            post.setImageId(image.getImageId());
         }
         postRepository.save(post);
         return getPost(post.getPostId(), false);
@@ -71,7 +77,14 @@ public class PostServiceImpl implements PostService {
 
     public void deletePost(String postId) {
         Post post = postRepository.findByPostId(postId);
+        if (post == null) {
+            return;
+        }
         Image image = imageRepository.findByImageId(post.getImageId());
+        //update dish rate
+        Dish dish = dishRepository.findByDishId(post.getDishId());
+        dish.setAvgRate((dish.getAvgRate() * dish.getPostNum() - post.getRate()) / (dish.getPostNum() - 1));
+        dish.setPostNum(dish.getPostNum() - 1);
         amazonClient.deleteFileFromS3Bucket(image.getUrl());
         imageRepository.deleteByImageId(image.getImageId());
         postRepository.deleteByPostId(postId);

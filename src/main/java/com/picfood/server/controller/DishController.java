@@ -13,10 +13,7 @@ import java.util.stream.Collectors;
 import com.picfood.server.service.PostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by Shuqi on 18/3/20.
@@ -45,6 +42,11 @@ public class DishController {
     public List<PostDTO> getDishPosts(@PathVariable("id") String id){
         List<Post> posts = postService.getPostByDishId(id);
         return posts.stream().map(p -> postService.getPost(p.getPostId(), false)).collect(Collectors.toList());
+    }
+
+    @GetMapping("/search/dishes")
+    public List<Dish> searchDishes( @RequestParam(value = "keyword", required = true) String keyword) {
+        return dishService.searchDishes(keyword);
     }
 
 }

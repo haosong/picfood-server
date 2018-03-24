@@ -29,4 +29,6 @@ public interface RestaurantRepository  extends JpaRepository<Restaurant, String>
             "        FROM restaurant as r  \n" +
             "        ORDER BY distance LIMIT 100 ",nativeQuery =  true)
     public List<Object[]> findRestaurantByLocation(@Param("lng") long lon, @Param("lat")long lat);
+
+    public List<Restaurant> findAllByNameContainingOrCategory(String word1, String word2);
 }
