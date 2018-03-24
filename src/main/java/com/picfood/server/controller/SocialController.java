@@ -42,4 +42,14 @@ public class SocialController {
     public List<User> getFollowings(@RequestHeader(value = USER_ID) String userId) {
         return socialService.getFollowings(userId);
     }
+
+    @GetMapping("/api/followers/{id}")
+    public List<User> getFollowers(@RequestHeader(value = USER_ID) String userId, @PathVariable("id") String id) {
+        return socialService.getFollowers(id);
+    }
+
+    @GetMapping("/api/followings/{id}")
+    public List<User> getFollowings(@RequestHeader(value = USER_ID) String userId, @PathVariable("id") String id) {
+        return socialService.getFollowings(id);
+    }
 }
