@@ -44,9 +44,9 @@ public class RestaurantController {
         return modelMapper.map(restaurant, RestaurantDTO.class);
     }
 
-    @GetMapping("/api/restaurants/{location}")
-    public List<Object[]> getNearRestaurant(@PathVariable("location") Object location){
-       return restaurantService.getRestaurantByLocation(1L,1L);
+    @GetMapping("/api/restaurants")
+    public List<Restaurant> getNearRestaurant(@RequestParam("lon") Double lon, @RequestParam("lat") Double lat){
+       return restaurantService.getRestaurantByLocation(lon,lat);
     }
 
     @GetMapping("/search/restaurants")

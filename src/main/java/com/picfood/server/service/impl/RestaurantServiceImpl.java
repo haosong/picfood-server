@@ -42,11 +42,11 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public List<Object[]> getRestaurantByLocation(Long lon, Long lat) {
+    public List<Restaurant> getRestaurantByLocation(double lon, double lat) {
         return restaurantRepository.findRestaurantByLocation(lon,lat);
     }
 
     public List<Restaurant> searchRestaurants(String keyword) {
-        return restaurantRepository.findAllByNameContainingOrCategory(keyword, keyword);
+        return restaurantRepository.findAllByNameContainingOrCategoryContaining(keyword, keyword);
     }
 }
