@@ -28,8 +28,6 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private DishRepository dishRepository;
     @Autowired
-    private ImageRepository imageRepository;
-    @Autowired
     private RestaurantRepository restaurantRepository;
     @Autowired
     private UserRepository userRepository;
@@ -64,13 +62,7 @@ public class PostServiceImpl implements PostService {
         dish.setAvgRate((dish.getAvgRate() * dish.getPostNum() + rate) / (dish.getPostNum() + 1));
         dish.setPostNum(dish.getPostNum() + 1);
         //save image
-        String imageUrl = postMsg.get("imageUrl");
-        if (imageUrl != null) {
-            Image image = new Image();
-            image.setUrl(imageUrl);
-            imageRepository.save(image);
-            post.setImageId(image.getImageId());
-        }
+        post.setImageUrl(postMsg.get("imageUrl"));
         postRepository.save(post);
         return getPost(post.getPostId(), false);
     }
@@ -80,13 +72,11 @@ public class PostServiceImpl implements PostService {
         if (post == null) {
             return;
         }
-        Image image = imageRepository.findByImageId(post.getImageId());
         //update dish rate
         Dish dish = dishRepository.findByDishId(post.getDishId());
         dish.setAvgRate((dish.getAvgRate() * dish.getPostNum() - post.getRate()) / (dish.getPostNum() - 1));
         dish.setPostNum(dish.getPostNum() - 1);
-        amazonClient.deleteFileFromS3Bucket(image.getUrl());
-        imageRepository.deleteByImageId(image.getImageId());
+        amazonClient.deleteFileFromS3Bucket(post.getImageUrl());
         postRepository.deleteByPostId(postId);
     }
 
@@ -106,7 +96,6 @@ public class PostServiceImpl implements PostService {
         User creator = userRepository.findByUserId(post.getCreatorId());
         postDTO.setCreatorAvater(creator.getAvatar());
         postDTO.setCreator(creator.getName());
-        postDTO.setImageUrl(imageRepository.findByImageId(post.getImageId()).getUrl());
         if (hasComment) {
             postDTO.setComments(commentService.getComments(post.getPostId()));
         }
@@ -116,11 +105,6 @@ public class PostServiceImpl implements PostService {
 
     public List<String> getImagesUrlsByDishId(String dishId) {
         return postRepository.findImagesByDishId(dishId);
-    }
-
-    public List<Image> getImagesByDishId(String dishId){
-        List<String> imageUrls = getImagesUrlsByDishId(dishId);
-        return imageRepository.findAllById(imageUrls);
     }
 
     public List<Post> getPostByDishId(String dishId) {

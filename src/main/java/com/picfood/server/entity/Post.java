@@ -14,7 +14,7 @@ public class Post {
     private String postId;
     private String dishId;
     private String creatorId;
-    private String imageId;
+    private String imageUrl;
     private String content;
     private int upvoteCount;
     private int rate;
@@ -42,12 +42,12 @@ public class Post {
         this.dishId = dishId;
     }
 
-    public String getImageId() {
-        return imageId;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImageId(String imageId) {
-        this.imageId = imageId;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public String getContent() {

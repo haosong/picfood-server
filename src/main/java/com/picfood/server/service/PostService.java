@@ -1,9 +1,7 @@
 package com.picfood.server.service;
-import java.io.IOException;
 import java.util.*;
 
 import com.picfood.server.entity.DTO.PostDTO;
-import com.picfood.server.entity.Image;
 import com.picfood.server.entity.Post;
 
 public interface PostService {
@@ -12,7 +10,6 @@ public interface PostService {
     public PostDTO getPost(String postId, boolean hasComment);
 
     List<String> getImagesUrlsByDishId(String dishId);
-    List<Image> getImagesByDishId(String dishId);
     List<Post> getPostByDishId(String dishId);
     public PostDTO convertToDTO(Post post, boolean hasComment);
 }

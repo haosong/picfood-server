@@ -38,9 +38,10 @@ public class DishController {
     }
 
     @GetMapping("/api/dishes/{id}/images")
-    public Object getDishImages(@PathVariable("id") String id){
-        return postService.getImagesByDishId(id);
+    public List<String> getDishImages(@PathVariable("id") String id){
+        return postService.getImagesUrlsByDishId(id);
     }
+
     @GetMapping("/api/dishes/{id}/post")
     public List<PostDTO> getDishPosts(@PathVariable("id") String id){
         List<Post> posts = postService.getPostByDishId(id);
