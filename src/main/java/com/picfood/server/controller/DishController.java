@@ -5,6 +5,7 @@ import com.picfood.server.entity.DTO.RestaurantDTO;
 import com.picfood.server.entity.Dish;
 import com.picfood.server.entity.Post;
 import com.picfood.server.entity.Restaurant;
+import com.picfood.server.repository.RestaurantRepository;
 import com.picfood.server.service.CommentService;
 import com.picfood.server.service.DishService;
 import java.util.*;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.*;
 public class DishController {
     private final DishService dishService;
     private final PostService postService;
+    @Autowired
+    private RestaurantRepository restaurantRepository;
 
     @Autowired
     public DishController(DishService dishService, PostService postService, CommentService commentService){
@@ -45,8 +48,34 @@ public class DishController {
     }
 
     @GetMapping("/search/dishes")
-    public List<Dish> searchDishes( @RequestParam(value = "keyword", required = true) String keyword) {
-        return dishService.searchDishes(keyword);
+    public List<Dish> searchDishes( @RequestParam(value = "keyword", required = true) String keyword, @RequestParam(value = "sorting", required = true) String sorting,
+                                               @RequestParam(value = "lon", required = false) Double lon, @RequestParam(value = "lat", required = false) Double lat) {
+        List<Dish> res = dishService.searchDishes(keyword);
+        if (sorting.equals("distance")) {
+            res.sort((a, b) -> {
+                Restaurant ra = restaurantRepository.findByRestaurantId(a.getRestaurantId());
+                Restaurant rb = restaurantRepository.findByRestaurantId(b.getRestaurantId());
+                double dist1 = getDist(ra.getLongitude(), ra.getLatitude(), lon, lat);
+                double dist2 = getDist(rb.getLongitude(), rb.getLatitude(), lon, lat);
+                if (dist1 < dist2) {
+                    return -1;
+                } else {
+                    return 1;
+                }
+            });
+        } else if (sorting.equals("rate")) {
+            res.sort((a, b) -> {
+                if (a.getAvgRate() < b.getAvgRate()) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            });
+        }
+        return res;
     }
 
+    private double getDist(double lon1, double lat1, double lon2, double lat2) {
+        return (lon1 - lon2) * (lon1 - lon2) + (lat1 - lat2) * (lat1 - lat2);
+    }
 }

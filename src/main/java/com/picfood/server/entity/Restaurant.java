@@ -19,8 +19,8 @@ public class Restaurant {
     private String name;
     private String avatar;
     private String address;
-    private Long longitude;
-    private Long latitude;
+    private double longitude;
+    private double latitude;
     private String teleNumber;
     private Long fanCount;
     private String category;
@@ -64,19 +64,19 @@ public class Restaurant {
         this.address = address;
     }
 
-    public Long getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(Long longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
-    public Long getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(Long latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
