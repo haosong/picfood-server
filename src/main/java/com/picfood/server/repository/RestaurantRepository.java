@@ -16,20 +16,27 @@ import java.util.List;
 public interface RestaurantRepository  extends JpaRepository<Restaurant, String> {
     public Restaurant findByRestaurantId(String id);
 //    public Restaurant findByName(String name);
-    @Query("select r from Restaurant as r where r.name like '%:name%'")
+    @Query("select r from Restaurant as r where r.name like %:name%")
     public List<Restaurant> findByName(@Param("name") String name);
 
-    @Query("select r from Restaurant as r where r.category like '%:category%'")
+    @Query("select r from Restaurant as r where r.category like %:category%")
     public List<Restaurant> findByCategory(@Param("category") String category);
 
-    @Query("select r from Restaurant as r where r.category like '%:content%' or r.name like '%:content%'")
+    @Query("select r from Restaurant as r where r.category like %:content% or r.name like %:content%")
     public List<Restaurant> searchByContent(@Param("content") String content);
+
     @Query(value = "SELECT   *,\n" +
             "        (POWER(MOD(ABS(r.longitude - :lng),360),2) + POWER(ABS(r.latitude - :lat),2)) AS distance  \n" +
             "        FROM restaurant as r  \n" +
             "        ORDER BY distance LIMIT 100 ",nativeQuery =  true)
-
     public List<Restaurant> findRestaurantByLocation(@Param("lng") double lon, @Param("lat")double lat);
 
     public List<Restaurant> findAllByNameContainingOrCategoryContaining(String word1, String word2);
+
+    @Query(value = "SELECT   *\n" +
+            "        FROM restaurant as r  \n" +
+            "        WHERE r.category like %:keyword% or r.name like %:keyword% and MOD(ABS(r.longitude - :lng),360) < 10 and ABS(r.latitude - :lat) < 10"
+            ,nativeQuery =  true)
+    public List<Restaurant> searchRestaurants(@Param("lng") double log, @Param("lat") double lat, @Param("keyword") String keyword);
+
 }

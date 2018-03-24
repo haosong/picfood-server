@@ -20,4 +20,6 @@ public interface RestaurantService {
     public List<Restaurant> searchRestaurants(String keyword);
 
     public List<String> getAllDishesCategory(String rid);
+
+    public List<Restaurant> searchRestaurants(double lon, double lat, String keyword);
 }

@@ -24,4 +24,6 @@ public interface DishService {
     public List<String> findNameByRestaurant(String rid);
 
     public List<Dish> searchDishes(String keyword);
+
+    public List<Dish> searchDishes(double lon, double lat, String keyword);
 }

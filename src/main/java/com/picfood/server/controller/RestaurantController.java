@@ -2,6 +2,7 @@ package com.picfood.server.controller;
 import com.picfood.server.entity.DTO.RestaurantDTO;
 import com.picfood.server.entity.Dish;
 import com.picfood.server.entity.Restaurant;
+import com.picfood.server.repository.RestaurantRepository;
 import com.picfood.server.service.DishService;
 import com.picfood.server.service.RestaurantService;
 import org.modelmapper.ModelMapper;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.stream.Collectors;
 
 /**
  * Created by Shuqi on 18/3/18.
@@ -21,7 +23,6 @@ public class RestaurantController {
     private final DishService dishService;
     @Autowired
     private ModelMapper modelMapper;
-
     @Autowired
     public RestaurantController(RestaurantService restaurantService, DishService dishService){
         this.restaurantService = restaurantService;
@@ -59,18 +60,8 @@ public class RestaurantController {
     @GetMapping("/search/restaurants")
     public List<Restaurant> searchRestaurants( @RequestParam(value = "keyword") String keyword, @RequestParam(value = "sorting") String sorting,
                                                @RequestParam(value = "lon") Double lon, @RequestParam(value = "lat") Double lat) {
-        List<Restaurant> res = restaurantService.searchRestaurants(keyword);
-        if (sorting.equals("distance")) {
-            res.sort((a, b) -> {
-                double dist1 = getDist(a.getLongitude(), a.getLatitude(),lon, lat);
-                double dist2 = getDist(b.getLongitude(), b.getLatitude(), lon, lat);
-                if (dist1 < dist2) {
-                    return -1;
-                } else {
-                    return 1;
-                }
-            });
-        } else if (sorting.equals("rate")) {
+        List<Restaurant> res = restaurantService.searchRestaurants(lon, lat, keyword);
+        if (sorting.equals("rate")) {
             res.sort((a, b) -> {
                 if (a.getAvgRate() < b.getAvgRate()) {
                     return 1;
@@ -78,6 +69,18 @@ public class RestaurantController {
                     return -1;
                 }
             });
+        } else if (sorting.equals("distance")) {
+            if (sorting.equals("distance")) {
+                res.sort((a, b) -> {
+                    double dist1 = getDist(a.getLongitude(), a.getLatitude(), lon, lat);
+                    double dist2 = getDist(b.getLongitude(), b.getLatitude(), lon, lat);
+                    if (dist1 < dist2) {
+                        return -1;
+                    } else {
+                        return 1;
+                    }
+                });
+            }
         }
         return res;
     }
