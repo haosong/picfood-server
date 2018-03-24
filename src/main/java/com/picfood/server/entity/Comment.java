@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "Comment")
-public class Comment {
+public class Comment extends Timeline {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")

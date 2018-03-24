@@ -12,4 +12,5 @@ public interface PostService {
     List<String> getImagesUrlsByDishId(String dishId);
     List<Post> getPostByDishId(String dishId);
     public PostDTO convertToDTO(Post post, boolean hasComment);
+    public List<Post> getPostByUserId(String userId);
 }

@@ -110,4 +110,8 @@ public class PostServiceImpl implements PostService {
     public List<Post> getPostByDishId(String dishId) {
         return postRepository.findAllByDishId(dishId);
     }
+
+    public List<Post> getPostByUserId(String userId) {
+        return postRepository.findAllByCreatorId(userId);
+    }
 }

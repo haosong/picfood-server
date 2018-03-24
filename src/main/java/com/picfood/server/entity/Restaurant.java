@@ -19,12 +19,23 @@ public class Restaurant {
     private String name;
     private String avatar;
     private String address;
+<<<<<<< Updated upstream
     private double longitude;
     private double latitude;
+=======
+<<<<<<< HEAD
+    private Double longitude;
+    private Double latitude;
+=======
+    private double longitude;
+    private double latitude;
+>>>>>>> 46f662c140c28c037bf1e0b50851210033901ae1
+>>>>>>> Stashed changes
     private String teleNumber;
     private Long fanCount;
     private String category;
     private double avgRate;
+    private int rateCount;
 
     @CreationTimestamp
     private Date created;
@@ -64,6 +75,7 @@ public class Restaurant {
         this.address = address;
     }
 
+<<<<<<< Updated upstream
     public double getLongitude() {
         return longitude;
     }
@@ -77,6 +89,37 @@ public class Restaurant {
     }
 
     public void setLatitude(double latitude) {
+=======
+<<<<<<< HEAD
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+=======
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+>>>>>>> 46f662c140c28c037bf1e0b50851210033901ae1
+>>>>>>> Stashed changes
         this.latitude = latitude;
     }
 
@@ -118,5 +161,13 @@ public class Restaurant {
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    public int getRateCount() {
+        return rateCount;
+    }
+
+    public void setRateCount(int rateCount) {
+        this.rateCount = rateCount;
     }
 }

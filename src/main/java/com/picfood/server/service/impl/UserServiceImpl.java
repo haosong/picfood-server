@@ -31,11 +31,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUserId(id);
     }
 
-    public Object createUser(User user) {
+    public User createUser(User user) {
         if (userRepository.findByEmail(user.getEmail()) == null) {
             return userRepository.save(user);
         } else {
-            return "Email existed";
+            return null;
         }
     }
 

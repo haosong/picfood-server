@@ -36,6 +36,12 @@ public class RestaurantController {
         dto.setDishes(dishes);
         return dto;
     }
+
+    @GetMapping("/api/restaurants/{id}/category")
+    public List<String> getAllDishesCategory(@PathVariable("id") String rid) {
+        return restaurantService.getAllDishesCategory(rid);
+    }
+
     @GetMapping("/api/restaurants/{id}/dishes")
     public List<Dish> getDishesByRestaurant(@PathVariable("id") String rid){
         return dishService.findByRestaurant(rid);
@@ -44,9 +50,9 @@ public class RestaurantController {
         return modelMapper.map(restaurant, RestaurantDTO.class);
     }
 
-    @GetMapping("/api/restaurants/{location}")
-    public List<Object[]> getNearRestaurant(@PathVariable("location") Object location){
-       return restaurantService.getRestaurantByLocation(1L,1L);
+    @GetMapping("/api/restaurants")
+    public List<Object[]> getNearRestaurant(@RequestParam("lat") String lat, @RequestParam("lon") String lon){
+       return restaurantService.getRestaurantByLocation(Double.parseDouble(lon), Double.parseDouble(lat));
     }
 
     @GetMapping("/search/restaurants")

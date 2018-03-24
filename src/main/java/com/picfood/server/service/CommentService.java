@@ -15,4 +15,6 @@ public interface CommentService {
     public CommentDTO convertToDTO(Comment comment);
 
     long getCommentCountByPostId(String postId);
+
+    public List<Comment> getCommentByUserId(String userId);
 }

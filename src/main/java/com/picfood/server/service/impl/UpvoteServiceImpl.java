@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 @Transactional
@@ -36,4 +37,9 @@ public class UpvoteServiceImpl implements UpvoteService {
         Post post = postRepository.findByPostId(postId);
         post.setUpvoteCount(Math.max(0, post.getUpvoteCount() - 1));
     }
+
+    public List<Upvote> getUpvoteByUserId(String userId) {
+        return upvoteRepository.findAllByUserId(userId);
+    }
+
 }
