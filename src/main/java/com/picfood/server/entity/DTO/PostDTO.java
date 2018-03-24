@@ -18,6 +18,7 @@ public class PostDTO {
     private String imageUrl;
     private String content;
     private int upvoteCount;
+    private int rate;
     private Date time;
     private List<CommentDTO> comments;
 
@@ -127,5 +128,13 @@ public class PostDTO {
 
     public void setComments(List<CommentDTO> comments) {
         this.comments = comments;
+    }
+
+    public int getRate() {
+        return rate;
+    }
+
+    public void setRate(int rate) {
+        this.rate = rate;
     }
 }

@@ -48,5 +48,10 @@ public class RestaurantController {
        return restaurantService.getRestaurantByLocation(1L,1L);
     }
 
+    @GetMapping("/search/restaurants")
+    public List<Restaurant> searchRestaurants( @RequestParam(value = "keyword", required = true) String keyword) {
+        return restaurantService.searchRestaurants(keyword);
+    }
+
 
 }

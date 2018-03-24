@@ -16,8 +16,12 @@ public class Dish {
     private String avatar;
     private String category;
     private String restaurantId;
+    private double avgRate;
+    private int postNum;
 
     public Dish() {
+        avgRate = 0;
+        postNum = 0;
     }
 
     public String getAvatar() {
@@ -58,5 +62,21 @@ public class Dish {
 
     public void setRestaurantId(String restaurantId) {
         this.restaurantId = restaurantId;
+    }
+
+    public double getAvgRate() {
+        return avgRate;
+    }
+
+    public void setAvgRate(double avgRate) {
+        this.avgRate = avgRate;
+    }
+
+    public int getPostNum() {
+        return postNum;
+    }
+
+    public void setPostNum(int postNum) {
+        this.postNum = postNum;
     }
 }

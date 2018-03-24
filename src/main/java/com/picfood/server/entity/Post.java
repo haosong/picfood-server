@@ -17,6 +17,7 @@ public class Post {
     private String imageId;
     private String content;
     private int upvoteCount;
+    private int rate;
 
     @CreationTimestamp
     private Date time;
@@ -79,5 +80,13 @@ public class Post {
 
     public void setTime(Date time) {
         this.time = time;
+    }
+
+    public int getRate() {
+        return rate;
+    }
+
+    public void setRate(int rate) {
+        this.rate = rate;
     }
 }

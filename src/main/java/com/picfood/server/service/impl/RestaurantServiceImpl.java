@@ -45,4 +45,8 @@ public class RestaurantServiceImpl implements RestaurantService {
     public List<Object[]> getRestaurantByLocation(Long lon, Long lat) {
         return restaurantRepository.findRestaurantByLocation(lon,lat);
     }
+
+    public List<Restaurant> searchRestaurants(String keyword) {
+        return restaurantRepository.findAllByNameContainingOrCategory(keyword, keyword);
+    }
 }

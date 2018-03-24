@@ -9,4 +9,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ImageRepository extends JpaRepository<Image, String>{
     public Image findByImageId(String id);
     public Image findByUrl(String url);
+    public void deleteByImageId(String id);
 }

@@ -57,4 +57,8 @@ public class DishServiceImpl implements DishService {
     public List<String> findNameByRestaurant(String rid) {
         return dishRepository.findNameByRestaurantId(rid);
     }
+
+    public List<Dish> searchDishes(String keyword) {
+        return dishRepository.findByNameContainingOrCategory(keyword, keyword);
+    }
 }

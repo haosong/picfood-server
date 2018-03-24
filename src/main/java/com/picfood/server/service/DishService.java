@@ -22,4 +22,6 @@ public interface DishService {
     public List<Dish> findByCategory(String category);
 
     public List<String> findNameByRestaurant(String rid);
+
+    public List<Dish> searchDishes(String keyword);
 }
