@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 import static com.picfood.server.config.JwtUtil.USER_ID;
 
@@ -64,6 +65,11 @@ public class UserController {
     // @ResponseBody
     public Object getUser(@RequestHeader(value = USER_ID) String userId) {
         return userService.getUserById(userId);
+    }
+
+    @GetMapping("/api/users/search")
+    public List<User> getUsersByName(@RequestHeader(value = USER_ID) String userId, @RequestParam(value = "name") String name) {
+        return userService.getUsersByName(name);
     }
 
     @GetMapping("/api/users/{id}")
