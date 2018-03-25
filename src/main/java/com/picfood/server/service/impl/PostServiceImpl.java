@@ -74,8 +74,10 @@ public class PostServiceImpl implements PostService {
         }
         //update dish rate
         Dish dish = dishRepository.findByDishId(post.getDishId());
-        dish.setAvgRate((dish.getAvgRate() * dish.getPostNum() - post.getRate()) / (dish.getPostNum() - 1));
-        dish.setPostNum(dish.getPostNum() - 1);
+        if (dish != null) {
+            dish.setAvgRate((dish.getAvgRate() * dish.getPostNum() - post.getRate()) / (dish.getPostNum() - 1));
+            dish.setPostNum(dish.getPostNum() - 1);
+        }
         amazonClient.deleteFileFromS3Bucket(post.getImageUrl());
         postRepository.deleteByPostId(postId);
     }
@@ -91,9 +93,15 @@ public class PostServiceImpl implements PostService {
     public PostDTO convertToDTO(Post post, boolean hasComment) {
         PostDTO postDTO = modelMapper.map(post, PostDTO.class);
         Dish dish = dishRepository.findByDishId(post.getDishId());
+        if (dish == null) {
+            throw new NoSuchElementException("Dish doesn't exist.");
+        }
         postDTO.setDishName(dish.getName());
         postDTO.setRestaurantName(restaurantRepository.findByRestaurantId(dish.getRestaurantId()).getName());
         User creator = userRepository.findByUserId(post.getCreatorId());
+        if (creator == null) {
+            throw new NoSuchElementException("User doesn't exist.");
+        }
         postDTO.setCreatorAvater(creator.getAvatar());
         postDTO.setCreator(creator.getName());
         if (hasComment) {

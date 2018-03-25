@@ -7,6 +7,8 @@ import com.picfood.server.entity.Post;
 import com.picfood.server.service.CommentService;
 import com.picfood.server.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import static com.picfood.server.config.JwtUtil.USER_ID;
@@ -21,8 +23,12 @@ public class PostController {
     }
 
     @PostMapping("/api/post")
-    public PostDTO post(@RequestHeader(value = USER_ID) String userId, @RequestBody Map<String, String> postMap) {
-        return postService.createPost(userId, postMap);
+    public Object post(@RequestHeader(value = USER_ID) String userId, @RequestBody Map<String, String> postMap) {
+        try{
+            return postService.createPost(userId, postMap);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
     @PostMapping("/api/delete/post")
@@ -31,8 +37,12 @@ public class PostController {
     }
 
     @GetMapping("/api/post/{postId}")
-    public PostDTO getPost(@PathVariable("postId") String postId) {
-        return postService.getPost(postId, true);
+    public Object getPost(@PathVariable("postId") String postId) {
+        try{
+            return postService.getPost(postId, true);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

@@ -1,6 +1,7 @@
 package com.picfood.server.service.impl;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import com.picfood.server.entity.Comment;
@@ -51,6 +52,9 @@ public class CommentServiceImpl implements CommentService {
     public CommentDTO convertToDTO(Comment comment) {
         CommentDTO commentDTO = modelMapper.map(comment, CommentDTO.class);
         User commenter = userRepository.findByUserId(comment.getCommenterId());
+        if (commenter == null) {
+            throw new NoSuchElementException("User doesn't exist.");
+        }
         commentDTO.setCommenter(commenter.getName());
         commentDTO.setCommenterAvatar(commenter.getAvatar());
         return commentDTO;
@@ -59,7 +63,6 @@ public class CommentServiceImpl implements CommentService {
     public void deleteComment(String commentId) {
         commentRepository.deleteByCommentId(commentId);
     }
-
 
     @Override
     public long getCommentCountByPostId(String postId) {
