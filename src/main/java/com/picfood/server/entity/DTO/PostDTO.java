@@ -14,7 +14,6 @@ public class PostDTO {
     private String creatorId;
     private String creator;
     private String creatorAvater;
-    private String imageId;
     private String imageUrl;
     private String content;
     private int upvoteCount;
@@ -39,15 +38,6 @@ public class PostDTO {
 
     public void setDishId(String dishId) {
         this.dishId = dishId;
-    }
-
-
-    public String getImageId() {
-        return imageId;
-    }
-
-    public void setImageId(String imageId) {
-        this.imageId = imageId;
     }
 
     public String getContent() {

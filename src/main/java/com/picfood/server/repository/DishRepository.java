@@ -25,4 +25,10 @@ public interface DishRepository extends JpaRepository<Dish, String> {
     @Query("select distinct d.category from Dish as d where d.restaurantId = :id")
     public List<String> findDistinctCategoryByRestaurantId(@Param("id") String id);
 
+    @Query(value = "SELECT   *\n" +
+            "        FROM restaurant as r, dish as d  \n" +
+            "        WHERE r.restaurant_id = d.restaurant_id, d.category like %:keyword% or d.name like %:keyword% and MOD(ABS(r.longitude - :lng),360) < 10 and ABS(r.latitude - :lat) < 10"
+            ,nativeQuery =  true)
+    public List<Dish> searchDishes(@Param("lng") double log, @Param("lat") double lat, @Param("keyword") String keyword);
+
 }
