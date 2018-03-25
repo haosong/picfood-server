@@ -26,3 +26,6 @@ nbdist/
 src/main/java/com/picfood/server/repository/RestaurantRepository.java
 src/main/java/com/picfood/server/entity/Restaurant.java
 pom.xml
+
+### YelpScraper
+YelpScraper/node_modules/*
