@@ -60,4 +60,10 @@ public class SocialServiceImpl implements SocialService {
                 .stream().map(Follow::getFollowee).collect(Collectors.toList());
         return userRepository.findAllById(followees_id);
     }
+
+    @Override
+    public boolean isFollow(String follower_id, String following_id) {
+        return followRepository.findAllByFollowerAndFollowee(follower_id, following_id).size() > 0;
+    }
+
 }

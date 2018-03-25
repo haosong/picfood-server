@@ -2,6 +2,7 @@ package com.picfood.server.controller;
 
 import com.picfood.server.config.JwtUtil;
 import com.picfood.server.entity.User;
+import com.picfood.server.service.SocialService;
 import com.picfood.server.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.picfood.server.config.JwtUtil.USER_ID;
 
@@ -22,15 +24,20 @@ import static com.picfood.server.config.JwtUtil.USER_ID;
 public class UserController {
 
     private final UserService userService;
+    private final SocialService socialService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, SocialService socialService) {
         this.userService = userService;
+        this.socialService = socialService;
     }
 
 
     @PostMapping("/login")
-    public Object login(HttpServletResponse response, @RequestBody final User user) throws IOException {
+    public Object login(@RequestParam(value = "email") String email, @RequestParam(value = "password") String password) {
+        User user = new User();
+        user.setEmail(email);
+        user.setPassword(password);
         if (userService.validatePassword(user)) {
             System.out.println(user.getUserId());
             String jwtToken = JwtUtil.generateToken(user.getUserId());
@@ -46,8 +53,11 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public Object register(@RequestBody final User user) {
+    public Object register(@RequestParam(value = "email") String email, @RequestParam(value = "password") String password) {
         // Validate Email and Password. Can be done in front-end.
+        User user = new User();
+        user.setEmail(email);
+        user.setPassword(password);
         User createdUser = userService.createUser(user);
         if (null == createdUser) {
             return new HashMap<String, String>() {{
@@ -69,17 +79,27 @@ public class UserController {
 
     @GetMapping("/api/users/search")
     public List<User> getUsersByName(@RequestHeader(value = USER_ID) String userId, @RequestParam(value = "name") String name) {
-        return userService.getUsersByName(name);
+        List<User> userList = userService.getUsersByName(name);
+        for (User u : userList)
+            u.setFollowing(socialService.isFollow(userId, u.getUserId()));
+        return userList;
     }
 
     @GetMapping("/api/users/{id}")
-    public Object getUserByUserId(@PathVariable("id") String id) {
-        return userService.getUserById(id);
+    public Object getUserByUserId(@RequestHeader(value = USER_ID) String userId, @PathVariable("id") String id) {
+        User u = userService.getUserById(id);
+        u.setFollowing(socialService.isFollow(userId, id));
+        return u;
     }
 
     @PostMapping("/api/users/me")
     public Object modifyUser(@RequestHeader(value = USER_ID) String userId, @RequestBody final User user) {
         return userService.updateUser(user);
+    }
+
+    @PostMapping("/api/users/changepassword")
+    public boolean changePassword(@RequestHeader(value = USER_ID) String userId, @RequestBody Map<String, String> password) {
+        return false;
     }
 
 }

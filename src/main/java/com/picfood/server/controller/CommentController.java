@@ -21,14 +21,14 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @PostMapping("/comment")
+    @PostMapping("/api/comment")
     public CommentDTO makeComment(@RequestHeader(value = USER_ID) String userId, @RequestBody Map<String, String> commentMap) {
         Comment comment = commentService.makeComment(userId, commentMap.get("postId"), commentMap.get("content"));
         return commentService.convertToDTO(comment);
     }
 
-    @PostMapping("/delete/comment")
-    public void deleteComment(@RequestBody Map<String, String> map) {
+    @PostMapping("/api/delete/comment")
+    public void deleteComment(@RequestHeader(value = USER_ID) String userId, @RequestBody Map<String, String> map) {
         commentService.deleteComment(map.get("commentId"));
     }
 

@@ -28,7 +28,7 @@ public class SocialController {
     private final CommentService commentService;
 
     @Autowired
-    public SocialController(SocialService socialService,UpvoteService upvoteService,PostService postService,CommentService commentService) {
+    public SocialController(SocialService socialService, UpvoteService upvoteService, PostService postService, CommentService commentService) {
         this.socialService = socialService;
         this.upvoteService = upvoteService;
         this.postService = postService;
@@ -74,6 +74,16 @@ public class SocialController {
             timelines.addAll(upvoteService.getUpvoteByUserId(f.getUserId()));
             timelines.addAll(postService.getPostByUserId(f.getUserId()));
         }
+        // timelines.sort((o1, o2) -> (o1.getTime().compareTo(o2.getTime())));
+        return timelines;
+    }
+
+    @GetMapping("/api/timeline/{id}")
+    public List<Timeline> getTimelineByUserId(@RequestHeader(value = USER_ID) String userId, @PathVariable("id") String id) {
+        List<Timeline> timelines = new ArrayList<>();
+        timelines.addAll(commentService.getCommentByUserId(id));
+        timelines.addAll(upvoteService.getUpvoteByUserId(id));
+        timelines.addAll(postService.getPostByUserId(id));
         // timelines.sort((o1, o2) -> (o1.getTime().compareTo(o2.getTime())));
         return timelines;
     }

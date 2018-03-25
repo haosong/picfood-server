@@ -1,5 +1,7 @@
 package com.picfood.server.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -12,13 +14,15 @@ import java.util.Date;
 @Entity
 @Table(name = "User")
 public class User {
-    @Id @GeneratedValue(generator="system-uuid")
-    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    @Id
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String userId;
-
     private String name;
     private String avatar;
     private String email;
+
+    @JsonIgnore
     private String password;
     private Long followCount;
     private Long fanCount;
@@ -26,6 +30,10 @@ public class User {
 
     @CreationTimestamp
     private Date created;
+
+    @JsonInclude()
+    @Transient
+    private boolean isFollowing;
 
     public User() {
 
@@ -101,5 +109,13 @@ public class User {
 
     public void setCreated(Date created) {
         this.created = created;
+    }
+
+    public boolean isFollowing() {
+        return isFollowing;
+    }
+
+    public void setFollowing(boolean following) {
+        isFollowing = following;
     }
 }

@@ -15,4 +15,6 @@ public interface SocialService {
     List<User> getFollowers(String userId);
 
     List<User> getFollowings(String userId);
+
+    boolean isFollow(String follower_id, String following_id);
 }
