@@ -5,7 +5,7 @@ server:
 #    org.springframework.security: DEBUG
 spring:
   datasource:
-    url: jdbc:mysql://54.218.80.39:3306/picfood?autoReconnect=true&useSSL=false
+    url: jdbc:mysql://pic-food.com:3306/picfood?autoReconnect=true&useSSL=false
     username: myuser
     password: YaleSE2018
     driver-class-name: org.gjt.mm.mysql.Driver
@@ -15,7 +15,7 @@ spring:
 #    show-sql: true
   redis:
    port: 6379
-   host: 54.218.80.39
+   host: pic-food.com
   session:
     store-type: redis
   servlet:

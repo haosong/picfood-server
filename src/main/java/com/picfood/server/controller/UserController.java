@@ -66,6 +66,11 @@ public class UserController {
         return userService.getUserById(userId);
     }
 
+    @GetMapping("/api/users/{id}")
+    public Object getUserByUserId(@PathVariable("id") String id) {
+        return userService.getUserById(id);
+    }
+
     @PostMapping("/api/users/me")
     public Object modifyUser(@RequestHeader(value = USER_ID) String userId, @RequestBody final User user) {
         return userService.updateUser(user);

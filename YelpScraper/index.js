@@ -1,8 +1,8 @@
-var request = require("request")
+var request = require("request");
 var mysql = require('mysql');
 
 var con = mysql.createConnection({
-	host: "54.218.80.39",
+	host: "pic-food.com",
 	user: "myuser",
 	password: "YaleSE2018",
 	database: "picfood"
