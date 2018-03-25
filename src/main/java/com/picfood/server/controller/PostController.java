@@ -13,15 +13,19 @@ import static com.picfood.server.config.JwtUtil.USER_ID;
 
 @RestController
 public class PostController {
-    @Autowired
-    private PostService postService;
+    private final PostService postService;
 
-    @PostMapping("/post")
+    @Autowired
+    public PostController(PostService postService) {
+        this.postService = postService;
+    }
+
+    @PostMapping("/api/post")
     public PostDTO post(@RequestHeader(value = USER_ID) String userId, @RequestBody Map<String, String> postMap) {
         return postService.createPost(userId, postMap);
     }
 
-    @PostMapping("/delete/post")
+    @PostMapping("/api/delete/post")
     public void deletePost(@RequestBody Map<String, String> map) {
         postService.deletePost(map.get("postId"));
     }
