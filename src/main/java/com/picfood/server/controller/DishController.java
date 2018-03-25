@@ -52,6 +52,7 @@ public class DishController {
     public List<Dish> searchDishes( @RequestParam(value = "keyword") String keyword, @RequestParam(value = "sorting") String sorting,
                                                @RequestParam(value = "lon") Double lon, @RequestParam(value = "lat") Double lat) {
         List<Dish> res = dishService.searchDishes(lon, lat, keyword);
+        System.out.println("1------>" + res.size());
         if (sorting.equals("distance")) {
             res.sort((a, b) -> {
                 Restaurant ra = restaurantRepository.findByRestaurantId(a.getRestaurantId());
