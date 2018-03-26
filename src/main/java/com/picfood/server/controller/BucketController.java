@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
  * Created by shawn on 2018/3/22.
  */
 @RestController
-@RequestMapping("/storage/")
+@RequestMapping("/api/storage/")
 public class BucketController {
 
     private AmazonClient amazonClient;
