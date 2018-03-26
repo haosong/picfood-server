@@ -48,7 +48,7 @@ public class DishController {
         return posts.stream().map(p -> postService.getPost(p.getPostId(), false)).collect(Collectors.toList());
     }
 
-    @GetMapping("/search/dishes")
+    @GetMapping("/api/search/dishes")
     public List<Dish> searchDishes( @RequestParam(value = "keyword") String keyword, @RequestParam(value = "sorting") String sorting,
                                                @RequestParam(value = "lon") Double lon, @RequestParam(value = "lat") Double lat) {
         List<Dish> res = dishService.searchDishes(lon, lat, keyword);

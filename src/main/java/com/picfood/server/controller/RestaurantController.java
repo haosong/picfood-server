@@ -57,7 +57,7 @@ public class RestaurantController {
        return restaurantService.getRestaurantByLocation(lon,lat);
     }
 
-    @GetMapping("/search/restaurants")
+    @GetMapping("/api/search/restaurants")
     public List<Restaurant> searchRestaurants( @RequestParam(value = "keyword") String keyword, @RequestParam(value = "sorting") String sorting,
                                                @RequestParam(value = "lon") Double lon, @RequestParam(value = "lat") Double lat) {
         List<Restaurant> res = restaurantService.searchRestaurants(lon, lat, keyword);
