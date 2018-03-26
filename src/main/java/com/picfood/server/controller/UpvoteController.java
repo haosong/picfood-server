@@ -21,12 +21,12 @@ public class UpvoteController {
         this.upvoteService = upvoteService;
     }
 
-    @PostMapping("/upvote")
+    @PostMapping("/api/upvote")
     public Upvote like(@RequestHeader(value = USER_ID) String userId, @RequestBody Map<String, String> likeMap) {
         return upvoteService.upvote(userId, likeMap.get("postId"));
     }
 
-    @PostMapping("/delete/upvote")
+    @PostMapping("/api/delete/upvote")
     public void deleteUpvote(@RequestBody Map<String, String> map) {
         upvoteService.deleteUpvote(map.get("upvoteId"), map.get("postId"));
     }
