@@ -89,4 +89,8 @@ public class Post extends Timeline {
     public void setRate(int rate) {
         this.rate = rate;
     }
+
+    public String getUserId() {
+        return this.creatorId;
+    }
 }

@@ -1,18 +1,14 @@
 package com.picfood.server.controller;
 
 import com.picfood.server.entity.*;
-import com.picfood.server.service.CommentService;
-import com.picfood.server.service.PostService;
-import com.picfood.server.service.SocialService;
-import com.picfood.server.service.UpvoteService;
+import com.picfood.server.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.picfood.server.config.JwtUtil.USER_ID;
 
@@ -26,13 +22,17 @@ public class SocialController {
     private final UpvoteService upvoteService;
     private final PostService postService;
     private final CommentService commentService;
+    private final UserService userService;
+    private final DishService dishService;
 
     @Autowired
-    public SocialController(SocialService socialService, UpvoteService upvoteService, PostService postService, CommentService commentService) {
+    public SocialController(SocialService socialService, UpvoteService upvoteService, PostService postService, CommentService commentService, UserService userService, DishService dishService) {
         this.socialService = socialService;
         this.upvoteService = upvoteService;
         this.postService = postService;
         this.commentService = commentService;
+        this.userService = userService;
+        this.dishService = dishService;
     }
 
     @PostMapping("/api/follow")
@@ -85,7 +85,16 @@ public class SocialController {
         timelines.addAll(upvoteService.getUpvoteByUserId(id));
         timelines.addAll(postService.getPostByUserId(id));
         // timelines.sort((o1, o2) -> (o1.getTime().compareTo(o2.getTime())));
-        return timelines;
+        return timelines.stream().map(this::addTimelineDetail).collect(Collectors.toList());
+    }
+
+    public Timeline addTimelineDetail(Timeline t) {
+        User u = userService.getUserById(t.getUserId());
+        Dish d = dishService.findByPostId(t.getPostId());
+        t.setDishName(d.getName());
+        t.setUserAvatar(u.getAvatar());
+        t.setUserName(u.getName());
+        return t;
     }
 
 }

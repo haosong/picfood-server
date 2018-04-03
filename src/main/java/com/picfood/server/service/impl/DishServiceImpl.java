@@ -2,8 +2,11 @@ package com.picfood.server.service.impl;
 
 import com.picfood.server.entity.Dish;
 import com.picfood.server.repository.DishRepository;
+import com.picfood.server.repository.PostRepository;
 import com.picfood.server.service.DishService;
+
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +16,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class DishServiceImpl implements DishService {
     private final DishRepository dishRepository;
+    private final PostRepository postRepository;
 
     @Autowired
-    public DishServiceImpl(DishRepository dishRepository){this.dishRepository = dishRepository;}
+    public DishServiceImpl(DishRepository dishRepository, PostRepository postRepository) {
+        this.dishRepository = dishRepository;
+        this.postRepository = postRepository;
+    }
 
 
     @Override
@@ -26,6 +33,10 @@ public class DishServiceImpl implements DishService {
     @Override
     public void deleteDish(String dishId) {
 
+    }
+
+    public Dish findByPostId(String id) {
+        return dishRepository.findByDishId(postRepository.findByPostId(id).getDishId());
     }
 
     @Override

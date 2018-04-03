@@ -22,7 +22,7 @@ public class Upvote extends Timeline {
     private String userId;
 
     @CreationTimestamp
-    private Date timestamp;
+    private Date time;
 
     public Upvote() {
     }
@@ -51,11 +51,12 @@ public class Upvote extends Timeline {
         this.userId = userId;
     }
 
-    public Date getTimestamp() {
-        return timestamp;
+    @Override
+    public Date getTime() {
+        return time;
     }
 
-    public void setTimestamp(Date timestamp) {
-        this.timestamp = timestamp;
+    public void setTime(Date time) {
+        this.time = time;
     }
 }
