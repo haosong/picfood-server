@@ -77,12 +77,13 @@ public class PostServiceImpl implements PostService {
         //update dish rate
         Dish dish = dishRepository.findByDishId(post.getDishId());
         if (dish != null) {
-            if (dish.getPostNum() <= 1) {
+            int postNum = dish.getPostNum();
+            if (postNum <= 1) {
                 dish.setAvgRate(0);
                 dish.setPostNum(0);
             } else {
-                dish.setAvgRate((dish.getAvgRate() * dish.getPostNum() - post.getRate()) / (dish.getPostNum() - 1));
-                dish.setPostNum(dish.getPostNum() - 1);
+                dish.setAvgRate((dish.getAvgRate() * postNum - post.getRate()) / (postNum - 1));
+                dish.setPostNum(postNum - 1);
             }
         }
         upvoteRepository.deleteAllByPostId(postId);
