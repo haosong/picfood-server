@@ -32,8 +32,8 @@ public class UpvoteServiceImpl implements UpvoteService {
         return upvoteRepository.save(like);
     }
 
-    public void deleteUpvote(String likeId, String postId) {
-        upvoteRepository.deleteByUpvoteId(likeId);
+    public void deleteUpvote(String upvoteId, String postId) {
+        upvoteRepository.deleteByUpvoteId(upvoteId);
         Post post = postRepository.findByPostId(postId);
         post.setUpvoteCount(Math.max(0, post.getUpvoteCount() - 1));
     }
