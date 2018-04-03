@@ -8,4 +8,5 @@ import java.util.List;
 public interface UpvoteRepository extends JpaRepository<Upvote, String> {
     public void deleteByUpvoteId(String upvoteId);
     public List<Upvote> findAllByUserId(String user_id);
+    public List<Upvote> findAllByUserIdAndPostId(String userId, String postId);
 }

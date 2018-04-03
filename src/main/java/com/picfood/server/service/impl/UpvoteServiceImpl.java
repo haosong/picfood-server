@@ -42,4 +42,13 @@ public class UpvoteServiceImpl implements UpvoteService {
         return upvoteRepository.findAllByUserId(userId);
     }
 
+    public String hasUpvoted(String userId, String postId) {
+        List<Upvote> u = upvoteRepository.findAllByUserIdAndPostId(userId, postId);
+        if (u.size() > 0) {
+            return u.get(0).getUpvoteId();
+        } else {
+            return "Not Upvoted";
+        }
+    }
+
 }
