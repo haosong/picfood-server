@@ -64,4 +64,8 @@ public class Comment extends Timeline {
     public void setTime(Date time) {
         this.time = time;
     }
+
+    public String getUserId() {
+        return this.commenterId;
+    }
 }

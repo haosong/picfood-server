@@ -11,6 +11,8 @@ public interface DishService {
     public void deleteDish(String dishId);
 
 
+    public Dish findByPostId(String id);
+
     public Dish findByDishId(String id);
 
     public Dish findByRestaurantAndName(String rid, String name);
