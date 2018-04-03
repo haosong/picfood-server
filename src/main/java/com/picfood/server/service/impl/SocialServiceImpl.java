@@ -7,7 +7,10 @@ import com.picfood.server.repository.UserRepository;
 import com.picfood.server.service.SocialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 
+import javax.transaction.Transactional;
+import java.beans.Transient;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,11 +29,16 @@ public class SocialServiceImpl implements SocialService {
     }
 
     @Override
+    @Transactional
     public boolean follow(String user, String other) {
         User follower = userRepository.findByUserId(user);
         User followee = userRepository.findByUserId(other);
         if (null != followee && null != follower) {
             followRepository.save(new Follow(user, other));
+            follower.setFollowCount(follower.getFollowCount() + 1);
+            followee.setFanCount(followee.getFanCount() + 1);
+            userRepository.save(follower);
+            userRepository.save(followee);
             return true;
         }
         return false;
@@ -42,6 +50,10 @@ public class SocialServiceImpl implements SocialService {
         User followee = userRepository.findByUserId(other);
         if (null != followee && null != follower) {
             followRepository.delete(new Follow(user, other));
+            follower.setFollowCount(follower.getFollowCount() - 1);
+            followee.setFanCount(followee.getFanCount() - 1);
+            userRepository.save(follower);
+            userRepository.save(followee);
             return true;
         }
         return false;

@@ -24,8 +24,13 @@ public class User {
 
     @JsonIgnore
     private String password;
-    private Long followCount;
-    private Long fanCount;
+
+    @Column(name="follow_count")
+    private Long followCount = 0L;
+
+    @Column(name="fan_count")
+    private Long fanCount = 0L;
+
     private String bio;
 
     @CreationTimestamp

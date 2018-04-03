@@ -34,10 +34,10 @@ public class UserController {
 
 
     @PostMapping("/login")
-    public Object login(@RequestParam(value = "email") String email, @RequestParam(value = "password") String password) {
+    public Object login(@RequestBody Map<String, String> loginMap) {
         User user = new User();
-        user.setEmail(email);
-        user.setPassword(password);
+        user.setEmail(loginMap.get("email"));
+        user.setPassword(loginMap.get("password"));
         if (userService.validatePassword(user)) {
             System.out.println(user.getUserId());
             String jwtToken = JwtUtil.generateToken(user.getUserId());
@@ -53,11 +53,12 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public Object register(@RequestParam(value = "email") String email, @RequestParam(value = "password") String password) {
-        // Validate Email and Password. Can be done in front-end.
+    public Object register(@RequestBody Map<String, String> loginMap) {
         User user = new User();
-        user.setEmail(email);
-        user.setPassword(password);
+        user.setEmail(loginMap.get("email"));
+        user.setPassword(loginMap.get("password"));
+        user.setName(loginMap.getOrDefault("name", ""));
+        user.setAvatar(loginMap.getOrDefault("avatar", ""));
         User createdUser = userService.createUser(user);
         if (null == createdUser) {
             return new HashMap<String, String>() {{

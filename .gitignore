@@ -29,3 +29,6 @@ pom.xml
 
 ### YelpScraper
 YelpScraper/node_modules/*
+
+### Spring boot application.yml
+src/main/resources/application.yml
