@@ -77,8 +77,13 @@ public class PostServiceImpl implements PostService {
         //update dish rate
         Dish dish = dishRepository.findByDishId(post.getDishId());
         if (dish != null) {
-            dish.setAvgRate((dish.getAvgRate() * dish.getPostNum() - post.getRate()) / (dish.getPostNum() - 1));
-            dish.setPostNum(dish.getPostNum() - 1);
+            if (dish.getPostNum() <= 1) {
+                dish.setAvgRate(0);
+                dish.setPostNum(0);
+            } else {
+                dish.setAvgRate((dish.getAvgRate() * dish.getPostNum() - post.getRate()) / (dish.getPostNum() - 1));
+                dish.setPostNum(dish.getPostNum() - 1);
+            }
         }
         upvoteRepository.deleteAllByPostId(postId);
         amazonClient.deleteFileFromS3Bucket(post.getImageUrl());
