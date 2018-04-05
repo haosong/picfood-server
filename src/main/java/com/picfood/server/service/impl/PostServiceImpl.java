@@ -107,6 +107,7 @@ public class PostServiceImpl implements PostService {
         }
         postDTO.setDishName(dish.getName());
         postDTO.setRestaurantName(restaurantRepository.findByRestaurantId(dish.getRestaurantId()).getName());
+        postDTO.setRestaurantId((dish.getRestaurantId()));
         User creator = userRepository.findByUserId(post.getCreatorId());
         if (creator == null) {
             throw new NoSuchElementException("User doesn't exist.");
