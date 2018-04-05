@@ -10,6 +10,7 @@ public class PostDTO {
     private String postId;
     private String dishId;
     private String restaurantName;
+    private String restaurantId;
     private String dishName;
     private String creatorId;
     private String creator;
@@ -30,6 +31,14 @@ public class PostDTO {
 
     public void setPostId(String postId) {
         this.postId = postId;
+    }
+
+    public void setRestaurantId(String restaurantId) {
+        this.restaurantId = restaurantId;
+    }
+
+    public String getRestaurantId() {
+        return restaurantId;
     }
 
     public String getDishId() {
