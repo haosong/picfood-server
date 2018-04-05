@@ -3,12 +3,17 @@ server:
   tomcat:
     remote-ip-header: x-forwarded-for
     protocol-header: x-forwarded-proto
+  ssl:
+    key-alias: pic-food
+    key-store-type: PKCS12
+    key-password: YaleSE2018
+    key-store: classpath:pic-food_com.p12
 #logging:
 #  level:
 #    org.springframework.security: DEBUG
 spring:
   datasource:
-    url: jdbc:mysql://pic-food.com:3306/picfood?autoReconnect=true&useSSL=false
+    url: jdbc:mysql://db.pic-food.com:3306/picfood?autoReconnect=true&useSSL=false
     username: myuser
     password: YaleSE2018
     driver-class-name: org.gjt.mm.mysql.Driver
@@ -18,7 +23,7 @@ spring:
 #    show-sql: true
   redis:
    port: 6379
-   host: pic-food.com
+   host: db.pic-food.com
   session:
     store-type: redis
   servlet:
