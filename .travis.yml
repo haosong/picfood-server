@@ -2,5 +2,7 @@ language: java
 jdk: oraclejdk8
 
 script:
-  - ./mvnw clean install
-  - bash <(curl -s https://codecov.io/bash)
+  - script: "mvn cobertura:cobertura"
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash) -t cf6b2380-f9ae-46ec-99af-0dc60952d5a6
