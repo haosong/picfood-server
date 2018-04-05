@@ -4,10 +4,10 @@ server:
     remote-ip-header: x-forwarded-for
     protocol-header: x-forwarded-proto
   ssl:
-    key-alias: pic-food
-    key-store-type: PKCS12
+    key-alias: pic-food.com
+    key-store-type: JKS
     key-password: YaleSE2018
-    key-store: classpath:pic-food_com.p12
+    key-store: classpath:keystore.jks
 #logging:
 #  level:
 #    org.springframework.security: DEBUG
