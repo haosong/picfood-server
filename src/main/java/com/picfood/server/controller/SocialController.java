@@ -75,7 +75,7 @@ public class SocialController {
             timelines.addAll(postService.getPostByUserId(f.getUserId()));
         }
         // timelines.sort((o1, o2) -> (o1.getTime().compareTo(o2.getTime())));
-        return timelines;
+        return timelines.stream().map(this::addTimelineDetail).collect(Collectors.toList());
     }
 
     @GetMapping("/api/timeline/{id}")
