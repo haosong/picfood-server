@@ -1,10 +1,13 @@
 package com.picfood.server.controller;
 
+import com.picfood.server.entity.DTO.DishDTO;
+import com.picfood.server.entity.DTO.DishSearchDTO;
 import com.picfood.server.entity.DTO.PostDTO;
 import com.picfood.server.entity.DTO.RestaurantDTO;
 import com.picfood.server.entity.Dish;
 import com.picfood.server.entity.Post;
 import com.picfood.server.entity.Restaurant;
+import com.picfood.server.entity.User;
 import com.picfood.server.repository.RestaurantRepository;
 import com.picfood.server.service.CommentService;
 import com.picfood.server.service.DishService;
@@ -12,6 +15,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import com.picfood.server.service.PostService;
+import com.picfood.server.service.RestaurantService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,13 +27,18 @@ import org.springframework.web.bind.annotation.*;
 public class DishController {
     private final DishService dishService;
     private final PostService postService;
-    @Autowired
-    private RestaurantRepository restaurantRepository;
+    private final RestaurantService restaurantService;
 
     @Autowired
-    public DishController(DishService dishService, PostService postService, CommentService commentService){
+    private RestaurantRepository restaurantRepository;
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @Autowired
+     public DishController(DishService dishService, PostService postService, RestaurantService restaurantService){
         this.dishService = dishService;
         this.postService = postService;
+        this.restaurantService = restaurantService;
     }
 
     @GetMapping("/api/dishes/{id}/info")
@@ -48,36 +57,44 @@ public class DishController {
         return posts.stream().map(p -> postService.getPost(p.getPostId(), false)).collect(Collectors.toList());
     }
 
+    @GetMapping("/api/dishes/{id}")
+    public Object getDish(@PathVariable("id")String id){
+        Dish dish = dishService.findByDishId(id);
+        if(dish == null){
+            return null;
+        }
+        DishDTO dishDTO = convertToDTO(dish);
+        List<PostDTO> postDTOList = getDishPosts(id);
+        dishDTO.setPosts(postDTOList);
+        return dishDTO;
+    }
     @GetMapping("/api/search/dishes")
-    public List<Dish> searchDishes( @RequestParam(value = "keyword") String keyword, @RequestParam(value = "sorting") String sorting,
+    public List<DishSearchDTO> searchDishes( @RequestParam(value = "keyword") String keyword, @RequestParam(value = "sorting") String sorting,
                                                @RequestParam(value = "lon") Double lon, @RequestParam(value = "lat") Double lat) {
         List<Dish> res = dishService.searchDishes(lon, lat, keyword);
         System.out.println("1------>" + res.size());
         if (sorting.equals("distance")) {
-            res.sort((a, b) -> {
-                Restaurant ra = restaurantRepository.findByRestaurantId(a.getRestaurantId());
-                Restaurant rb = restaurantRepository.findByRestaurantId(b.getRestaurantId());
-                double dist1 = getDist(ra.getLongitude(), ra.getLatitude(), lon, lat);
-                double dist2 = getDist(rb.getLongitude(), rb.getLatitude(), lon, lat);
-                if (dist1 < dist2) {
-                    return -1;
-                } else {
-                    return 1;
-                }
-            });
+            res.sort(Comparator.comparingDouble(a -> restaurantService.calcDistanceById(a.getRestaurantId(),lon,lat)));
         } else if (sorting.equals("rate")) {
-            res.sort((a, b) -> {
-                if (a.getAvgRate() < b.getAvgRate()) {
-                    return 1;
-                } else {
-                    return -1;
-                }
-            });
+            res.sort(Comparator.comparingDouble(a -> -a.getAvgRate()));
         }
-        return res;
+        return res.stream().map(d -> converToDTO(d,lon,lat)).collect(Collectors.toList());
     }
 
     private double getDist(double lon1, double lat1, double lon2, double lat2) {
         return (lon1 - lon2) * (lon1 - lon2) + (lat1 - lat2) * (lat1 - lat2);
+    }
+
+    public DishDTO convertToDTO(Dish dish) {
+        DishDTO dishDTO = modelMapper.map(dish, DishDTO.class);
+        dishDTO.setRestaurantName(dish.getRestaurantId());
+        return dishDTO;
+    }
+
+    public DishSearchDTO converToDTO(Dish dish, Double lon, Double lat){
+        DishSearchDTO dishSearchDTO = modelMapper.map(dish, DishSearchDTO.class);
+        dishSearchDTO.setDistance(restaurantService.calcDistanceById(dish.getRestaurantId(),lon,lat));
+        dishSearchDTO.setImageUrls(postService.getImagesUrlsByDishId(dish.getDishId()));
+        return dishSearchDTO;
     }
 }

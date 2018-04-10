@@ -22,4 +22,6 @@ public interface RestaurantService {
     public List<String> getAllDishesCategory(String rid);
 
     public List<Restaurant> searchRestaurants(double lon, double lat, String keyword);
+
+    public double calcDistanceById(String id, double lon, double lat);
 }

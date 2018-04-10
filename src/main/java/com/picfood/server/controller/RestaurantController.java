@@ -1,5 +1,6 @@
 package com.picfood.server.controller;
 import com.picfood.server.entity.DTO.RestaurantDTO;
+import com.picfood.server.entity.DTO.RestaurantSearchDTO;
 import com.picfood.server.entity.Dish;
 import com.picfood.server.entity.Restaurant;
 import com.picfood.server.repository.RestaurantRepository;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.stream.Collectors;
@@ -58,36 +60,22 @@ public class RestaurantController {
     }
 
     @GetMapping("/api/search/restaurants")
-    public List<Restaurant> searchRestaurants( @RequestParam(value = "keyword") String keyword, @RequestParam(value = "sorting") String sorting,
+    public List<RestaurantSearchDTO> searchRestaurants( @RequestParam(value = "keyword") String keyword, @RequestParam(value = "sorting") String sorting,
                                                @RequestParam(value = "lon") Double lon, @RequestParam(value = "lat") Double lat) {
         List<Restaurant> res = restaurantService.searchRestaurants(lon, lat, keyword);
-        if (sorting.equals("rate")) {
-            res.sort((a, b) -> {
-                if (a.getAvgRate() < b.getAvgRate()) {
-                    return 1;
-                } else {
-                    return -1;
-                }
-            });
-        } else if (sorting.equals("distance")) {
-            if (sorting.equals("distance")) {
-                res.sort((a, b) -> {
-                    double dist1 = getDist(a.getLongitude(), a.getLatitude(), lon, lat);
-                    double dist2 = getDist(b.getLongitude(), b.getLatitude(), lon, lat);
-                    if (dist1 < dist2) {
-                        return -1;
-                    } else {
-                        return 1;
-                    }
-                });
-            }
+        if (sorting.equals("distance")) {
+            res.sort(Comparator.comparingDouble(a -> restaurantService.calcDistanceById(a.getRestaurantId(),lon,lat)));
+        } else if (sorting.equals("rate")) {
+            res.sort(Comparator.comparingDouble(a -> -a.getAvgRate()));
         }
-        return res;
+        return res.stream().map(r->convertToSearchDTO(r, lon, lat)).collect(Collectors.toList());
+    }
+    private RestaurantSearchDTO convertToSearchDTO(Restaurant restaurant, double lon, double lat){
+        RestaurantSearchDTO restaurantSearchDTO = modelMapper.map(restaurant, RestaurantSearchDTO.class);
+        restaurantSearchDTO.setDistance(restaurantService.calcDistanceById(restaurant.getRestaurantId(), lon, lat));
+        return restaurantSearchDTO;
     }
 
-    private double getDist(double lon1, double lat1, double lon2, double lat2) {
-        return (lon1 - lon2) * (lon1 - lon2) + (lat1 - lat2) * (lat1 - lat2);
-    }
 
 
 }
