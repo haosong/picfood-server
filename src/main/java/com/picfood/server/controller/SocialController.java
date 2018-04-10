@@ -90,10 +90,14 @@ public class SocialController {
 
     public Timeline addTimelineDetail(Timeline t) {
         User u = userService.getUserById(t.getUserId());
-        Dish d = dishService.findByPostId(t.getPostId());
-        t.setDishName(d.getName());
         t.setUserAvatar(u.getAvatar());
         t.setUserName(u.getName());
+        try {
+            Dish d = dishService.findByPostId(t.getPostId());
+            if (d != null) t.setDishName(d.getName());
+        } catch (NullPointerException ignored) {
+
+        }
         return t;
     }
 
