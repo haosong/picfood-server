@@ -34,6 +34,8 @@ public class PostServiceImpl implements PostService {
     @Autowired
     private UpvoteRepository upvoteRepository;
     @Autowired
+    private CommentRepository commentRepository;
+    @Autowired
     private AmazonClient amazonClient;
     @Autowired
     private ModelMapper modelMapper;
@@ -86,6 +88,7 @@ public class PostServiceImpl implements PostService {
                 dish.setPostNum(postNum - 1);
             }
         }
+        commentRepository.deleteAllByPostId(postId);
         upvoteRepository.deleteAllByPostId(postId);
         amazonClient.deleteFileFromS3Bucket(post.getImageUrl());
         postRepository.deleteByPostId(postId);

@@ -10,6 +10,7 @@ public interface CommentRepository extends JpaRepository<Comment, String> {
     public List<Comment> findAllByPostId(String pid);
     public Comment findByCommentId(String commentId);
     public void deleteByCommentId(String commentId);
+    public void deleteAllByPostId(String postId);
 
     @Query("SELECT COUNT(c) FROM Comment AS c WHERE postId = :postId GROUP BY postId")
     long getCommentCountByPostId(@Param("postId") String pid);
