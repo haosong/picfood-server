@@ -10,6 +10,7 @@ public class CommentDTO {
     private String commenter;
     private String commenterAvatar;
     private String content;
+    private String posterName;
     private Date time;
 
 
@@ -67,5 +68,13 @@ public class CommentDTO {
 
     public void setTime(Date time) {
         this.time = time;
+    }
+
+    public String getPosterName() {
+        return posterName;
+    }
+
+    public void setPosterName(String posterName) {
+        this.posterName = posterName;
     }
 }
