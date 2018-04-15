@@ -27,8 +27,8 @@ public interface DishRepository extends JpaRepository<Dish, String> {
 
     @Query(value = "SELECT d.*\n" +
             "        FROM restaurant r, dish d\n" +
-            "        WHERE r.restaurant_id = d.restaurant_id and (d.category like %:keyword% or d.name like %:keyword%) and MOD(ABS(r.longitude - :lng),360) < 10 and ABS(r.latitude - :lat) < 10"
+            "        WHERE r.restaurant_id = d.restaurant_id and (LOWER(d.category) like %:keyword% or LOWER(d.name) like %:keyword%) and get_distance(r.latitude, r.longitude, :lat, :lng) < :range"
             ,nativeQuery =  true)
-    public List<Dish> searchDishes(@Param("lng") double log, @Param("lat") double lat, @Param("keyword") String keyword);
+    public List<Dish> searchDishes(@Param("lng") double log, @Param("lat") double lat, @Param("range") double range, @Param("keyword") String keyword);
 
 }

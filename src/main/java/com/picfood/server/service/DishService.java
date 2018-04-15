@@ -27,5 +27,5 @@ public interface DishService {
 
     public List<Dish> searchDishes(String keyword);
 
-    public List<Dish> searchDishes(double lon, double lat, String keyword);
+    public List<Dish> searchDishes(double lon, double lat, double range, String keyword);
 }

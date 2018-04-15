@@ -70,9 +70,8 @@ public class DishController {
     }
     @GetMapping("/api/search/dishes")
     public List<DishSearchDTO> searchDishes( @RequestParam(value = "keyword") String keyword, @RequestParam(value = "sorting") String sorting,
-                                               @RequestParam(value = "lon") Double lon, @RequestParam(value = "lat") Double lat) {
-        List<Dish> res = dishService.searchDishes(lon, lat, keyword);
-        System.out.println("1------>" + res.size());
+                                               @RequestParam(value = "lon") Double lon, @RequestParam(value = "lat") Double lat, @RequestParam(value = "range") Double range) {
+        List<Dish> res = dishService.searchDishes(lon, lat, range, keyword.toLowerCase());
         if (sorting.equals("distance")) {
             res.sort(Comparator.comparingDouble(a -> restaurantService.calcDistanceById(a.getRestaurantId(),lon,lat)));
         } else if (sorting.equals("rate")) {

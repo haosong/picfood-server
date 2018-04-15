@@ -34,7 +34,7 @@ public interface RestaurantRepository  extends JpaRepository<Restaurant, String>
     public List<Restaurant> findAllByNameContainingOrCategoryContaining(String word1, String word2);
 
     @Query(value = "SELECT   *\n" +
-            "        FROM restaurant as r  \n" +
+            "        FROM restaurant  \n" +
             "        WHERE (LOWER(category) like %:keyword% or LOWER(name) like %:keyword%) and get_distance(latitude, longitude, :lat, :lng) < :range"
             ,nativeQuery =  true)
     public List<Restaurant> searchRestaurants(@Param("lng") double lng, @Param("lat") double lat, @Param("range") double range, @Param("keyword") String keyword);
