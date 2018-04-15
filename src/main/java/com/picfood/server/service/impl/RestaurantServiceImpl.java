@@ -55,8 +55,8 @@ public class RestaurantServiceImpl implements RestaurantService {
         return restaurantRepository.findAllByNameContainingOrCategoryContaining(keyword, keyword);
     }
 
-    public List<Restaurant> searchRestaurants(double lon, double lat, String keyword) {
-        return restaurantRepository.searchRestaurants(lon, lat, keyword);
+    public List<Restaurant> searchRestaurants(double lon, double lat, double range, String keyword) {
+        return restaurantRepository.searchRestaurants(lon, lat, range, keyword);
     }
 
     @Override
