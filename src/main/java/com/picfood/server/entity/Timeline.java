@@ -10,6 +10,8 @@ public abstract class Timeline {
 
     String userAvatar;
 
+    String dishId;
+
     String dishName;
 
     String posterId;
@@ -80,5 +82,13 @@ public abstract class Timeline {
 
     public void setPosterId(String posterId) {
         this.posterId = posterId;
+    }
+
+    public String getDishId() {
+        return dishId;
+    }
+
+    public void setDishId(String dishId) {
+        this.dishId = dishId;
     }
 }
