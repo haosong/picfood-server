@@ -24,7 +24,6 @@ public class SocialController {
     private final PostService postService;
     private final CommentService commentService;
     private final UserService userService;
-    private final DishService dishService;
 
     @Autowired
     public SocialController(SocialService socialService, UpvoteService upvoteService, PostService postService, CommentService commentService, UserService userService, DishService dishService) {
@@ -33,7 +32,6 @@ public class SocialController {
         this.postService = postService;
         this.commentService = commentService;
         this.userService = userService;
-        this.dishService = dishService;
     }
 
     @PostMapping("/api/follow")
@@ -75,8 +73,9 @@ public class SocialController {
             timelines.addAll(upvoteService.getUpvoteByUserId(f.getUserId()));
             timelines.addAll(postService.getPostByUserId(f.getUserId()));
         }
-        // timelines.sort((o1, o2) -> (o1.getTime().compareTo(o2.getTime())));
-        return timelines.stream().map(this::addTimelineDetail).collect(Collectors.toList());
+        timelines.stream().map(this::addTimelineDetail).collect(Collectors.toList());
+        timelines.sort((o1, o2) -> (o2.getTime().compareTo(o1.getTime())));
+        return timelines;
     }
 
     @GetMapping("/api/timeline/{id}")
@@ -85,11 +84,12 @@ public class SocialController {
         timelines.addAll(commentService.getCommentByUserId(id));
         timelines.addAll(upvoteService.getUpvoteByUserId(id));
         timelines.addAll(postService.getPostByUserId(id));
-        // timelines.sort((o1, o2) -> (o1.getTime().compareTo(o2.getTime())));
-        return timelines.stream().map(this::addTimelineDetail).collect(Collectors.toList());
+        timelines.stream().map(this::addTimelineDetail).collect(Collectors.toList());
+        timelines.sort((o1, o2) -> (o2.getTime().compareTo(o1.getTime())));
+        return timelines;
     }
 
-    public Timeline addTimelineDetail(Timeline t) {
+    private Timeline addTimelineDetail(Timeline t) {
         User u = userService.getUserById(t.getUserId());
         t.setUserAvatar(u.getAvatar());
         t.setUserName(u.getName());
@@ -101,6 +101,7 @@ public class SocialController {
                 t.setPosterName(p.getCreator());
                 t.setPosterId(p.getCreatorId());
                 t.setDishName(p.getDishName());
+                t.setDishId(p.getDishId());
                 // Dish d = dishService.findByPostId(t.getPostId());
                 // if (d != null) t.setDishName(d.getName());
             }

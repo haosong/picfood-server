@@ -100,6 +100,8 @@ public class UserController {
 
     @PostMapping("/api/users/me")
     public Object modifyUser(@RequestHeader(value = USER_ID) String userId, @RequestBody final User user) {
+        User u = userService.getUserById(userId);
+        user.setPassword(u.getPassword());
         return userService.updateUser(user);
     }
 
