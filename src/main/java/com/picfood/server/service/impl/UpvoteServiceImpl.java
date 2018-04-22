@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -40,6 +41,10 @@ public class UpvoteServiceImpl implements UpvoteService {
 
     public List<Upvote> getUpvoteByUserId(String userId) {
         return upvoteRepository.findAllByUserId(userId);
+    }
+
+    public List<Upvote> getUpvoteByUserId(String userId, Date time) {
+        return upvoteRepository.findFirst20ByUserIdAndTimeBeforeOrderByTimeDesc(userId, time);
     }
 
     public String hasUpvoted(String userId, String postId) {

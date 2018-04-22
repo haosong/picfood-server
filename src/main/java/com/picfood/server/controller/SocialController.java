@@ -4,10 +4,13 @@ import com.picfood.server.entity.*;
 import com.picfood.server.entity.DTO.PostDTO;
 import com.picfood.server.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -65,21 +68,39 @@ public class SocialController {
     }
 
     @GetMapping("/api/timeline")
-    public List<Timeline> getTimeline(@RequestHeader(value = USER_ID) String userId) {
-        List<User> followings = socialService.getFollowings(userId);
-        List<Timeline> timelines = new ArrayList<>();
-        for (User f : followings) {
-            timelines.addAll(commentService.getCommentByUserId(f.getUserId()));
-            timelines.addAll(upvoteService.getUpvoteByUserId(f.getUserId()));
-            timelines.addAll(postService.getPostByUserId(f.getUserId()));
-        }
-        timelines.stream().map(this::addTimelineDetail).collect(Collectors.toList());
-        timelines.sort((o1, o2) -> (o2.getTime().compareTo(o1.getTime())));
-        return timelines;
+    public List<Timeline> getTimeline(@RequestHeader(value = USER_ID) String userId,
+                                      @RequestParam(value = "time", required = false)
+                                      @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date time) {
+        return time == null ? getAllTimeline(userId) : getPageTimeline(userId, time);
     }
 
     @GetMapping("/api/timeline/{id}")
-    public List<Timeline> getTimelineByUserId(@RequestHeader(value = USER_ID) String userId, @PathVariable("id") String id) {
+    public List<Timeline> getTimelineByUserId(@RequestHeader(value = USER_ID) String userId,
+                                              @PathVariable("id") String id,
+                                              @RequestParam(value = "time", required = false)
+                                              @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date time) {
+        return time == null ? getAllTimeline(id) : getPageTimeline(id, time);
+    }
+
+
+    private List<Timeline> getPageTimeline(String id, Date time) {
+        List<User> followings = socialService.getFollowings(id);
+        List<Timeline> timelines = new ArrayList<>();
+        for (User f : followings) {
+            timelines.addAll(commentService.getCommentByUserId(f.getUserId(), time));
+            timelines.addAll(upvoteService.getUpvoteByUserId(f.getUserId(), time));
+            timelines.addAll(postService.getPostByUserId(f.getUserId(), time));
+        }
+        timelines.sort((o1, o2) -> (o2.getTime().compareTo(o1.getTime())));
+        int length = 20;
+        if (timelines.size() > length)
+            while (timelines.get(length).getTime().equals(timelines.get(length - 1))) length++;
+        List<Timeline> first20 = timelines.subList(0, length);
+        first20.stream().map(this::addTimelineDetail).collect(Collectors.toList());
+        return first20;
+    }
+
+    private List<Timeline> getAllTimeline(String id) {
         List<Timeline> timelines = new ArrayList<>();
         timelines.addAll(commentService.getCommentByUserId(id));
         timelines.addAll(upvoteService.getUpvoteByUserId(id));

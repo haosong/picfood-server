@@ -13,4 +13,5 @@ public interface PostService {
     List<Post> getPostByDishId(String dishId);
     public PostDTO convertToDTO(Post post, boolean hasComment);
     public List<Post> getPostByUserId(String userId);
+    public List<Post> getPostByUserId(String userId, Date time);
 }

@@ -1,5 +1,6 @@
 package com.picfood.server.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -75,6 +76,10 @@ public class CommentServiceImpl implements CommentService {
 
     public List<Comment> getCommentByUserId(String userId) {
         return commentRepository.findAllByCommenterId(userId);
+    }
+
+    public List<Comment> getCommentByUserId(String userId, Date time) {
+        return commentRepository.findFirst20ByCommenterIdAndTimeBeforeOrderByTimeDesc(userId, time);
     }
 
 }

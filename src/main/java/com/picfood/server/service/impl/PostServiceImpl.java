@@ -135,4 +135,8 @@ public class PostServiceImpl implements PostService {
     public List<Post> getPostByUserId(String userId) {
         return postRepository.findAllByCreatorId(userId);
     }
+
+    public List<Post> getPostByUserId(String userId, Date time) {
+        return postRepository.findFirst20ByCreatorIdAndTimeBeforeOrderByTimeDesc(userId, time);
+    }
 }

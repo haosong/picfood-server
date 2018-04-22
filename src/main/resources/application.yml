@@ -18,6 +18,7 @@ spring:
     password: YaleSE2018
     driver-class-name: org.gjt.mm.mysql.Driver
   jpa:
+    show-sql: false
     hibernate:
       ddl-auto: update # validate
 #    show-sql: true
