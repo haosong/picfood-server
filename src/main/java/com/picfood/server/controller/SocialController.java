@@ -75,8 +75,9 @@ public class SocialController {
             timelines.addAll(upvoteService.getUpvoteByUserId(f.getUserId()));
             timelines.addAll(postService.getPostByUserId(f.getUserId()));
         }
-        // timelines.sort((o1, o2) -> (o1.getTime().compareTo(o2.getTime())));
-        return timelines.stream().map(this::addTimelineDetail).collect(Collectors.toList());
+        timelines.stream().map(this::addTimelineDetail).collect(Collectors.toList());
+        timelines.sort((o1, o2) -> (o1.getTime().compareTo(o2.getTime())));
+        return timelines;
     }
 
     @GetMapping("/api/timeline/{id}")
@@ -85,8 +86,9 @@ public class SocialController {
         timelines.addAll(commentService.getCommentByUserId(id));
         timelines.addAll(upvoteService.getUpvoteByUserId(id));
         timelines.addAll(postService.getPostByUserId(id));
-        // timelines.sort((o1, o2) -> (o1.getTime().compareTo(o2.getTime())));
-        return timelines.stream().map(this::addTimelineDetail).collect(Collectors.toList());
+        timelines.stream().map(this::addTimelineDetail).collect(Collectors.toList());
+        timelines.sort((o1, o2) -> (o1.getTime().compareTo(o2.getTime())));
+        return timelines;
     }
 
     public Timeline addTimelineDetail(Timeline t) {
