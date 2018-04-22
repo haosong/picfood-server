@@ -1,6 +1,7 @@
 package com.picfood.server.controller;
 
 import com.picfood.server.entity.*;
+import com.picfood.server.entity.DTO.PostDTO;
 import com.picfood.server.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -93,8 +94,16 @@ public class SocialController {
         t.setUserAvatar(u.getAvatar());
         t.setUserName(u.getName());
         try {
-            Dish d = dishService.findByPostId(t.getPostId());
-            if (d != null) t.setDishName(d.getName());
+            PostDTO p = postService.getPost(t.getPostId(), false);
+            if (p != null) {
+                t.setRestaurantId(p.getRestaurantId());
+                t.setRestaurantName(p.getRestaurantName());
+                t.setPosterName(p.getCreator());
+                t.setPosterId(p.getCreatorId());
+                t.setDishName(p.getDishName());
+                // Dish d = dishService.findByPostId(t.getPostId());
+                // if (d != null) t.setDishName(d.getName());
+            }
         } catch (NullPointerException ignored) {
 
         }
