@@ -11,8 +11,6 @@ import java.util.List;
 public interface RestaurantService {
     public Restaurant getRestaurantById(String id);
 
-    public List<Restaurant> getRestaurantByCondition(SearchCondition condition);
-
     public Object createRestaurant(Restaurant restaurant);
 
     public List<Restaurant> getRestaurantByLocation(double lon, double lat);

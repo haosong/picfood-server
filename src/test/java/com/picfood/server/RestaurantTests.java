@@ -24,31 +24,31 @@ public class RestaurantTests {
     @Test
     public void testGetRestaurantInfo(){
         RestaurantDTO r1 = (RestaurantDTO) restaurantController.getRestaurantInfo("basil-restaurant-new-haven-2");
-        Assert.assertTrue(r1 != null || r1.getName().equals("Basil Restaurant"));
+        Assert.assertTrue(r1 != null && r1.getName().equals("Basil Restaurant"));
 
     }
     @Test
     public void testGetAllDishesCatagory(){
-        List<String> result = restaurantController.getAllDishesCategory("basil-restaurant-new-haven-2");
-        Assert.assertTrue(result.size() > 0 || result.get(0).equals("Asian Fusion"));
+        List<String> result = restaurantController.getAllDishesCategory("rice-pot-thai-cuisine-new-haven");
+        Assert.assertTrue(result.size() > 0 && result.get(0).equals("steak"));
     }
     @Test
     public void testGetDishByRestaurant(){
         List<Dish> result = restaurantController.getDishesByRestaurant("basil-restaurant-new-haven-2");
-        Assert.assertTrue(result.size() > 0 || result.get(0).getDishId().equals("2c9abebe625fd50801625fe33bb6000f"));
+        Assert.assertTrue(result.size() > 0 && result.get(0).getDishId().equals("2c9abebe625fd50801625fe33bb6000f"));
 
     }
     @Test
     public void testGetNearRestaurant(){
         List<Restaurant> result = restaurantController.getNearRestaurant(-72.9265664,41.3052498);
-        Assert.assertTrue(result.size() > 0 || result.get(0).getRestaurantId().equals("cajun-boiled-seafood-ct-new-haven"));
+        Assert.assertTrue(result.size() > 0 && result.get(0).getRestaurantId().equals("cajun-boiled-seafood-ct-new-haven"));
     }
     @Test
     public void testSearchRestaurants(){
         List<RestaurantSearchDTO> result = restaurantController.searchRestaurants("basil","distance", -72.92,41.30, 100.);
-        Assert.assertTrue(result.size() > 0 || result.get(0).getName().equals("Basil Restaurant"));
+        Assert.assertTrue(result.size() > 0 && result.get(0).getName().equals("Basil Restaurant"));
         List<RestaurantSearchDTO> result1 = restaurantController.searchRestaurants("basil", "rate", -72.92,41.30, 100.);
-        Assert.assertTrue(result1.size() > 0 || result1.get(0).getName().equals("Basil Restaurant"));
+        Assert.assertTrue(result1.size() > 0 && result1.get(0).getName().equals("Basil Restaurant"));
 
     }
 

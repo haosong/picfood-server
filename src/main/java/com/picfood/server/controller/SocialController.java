@@ -32,7 +32,6 @@ public class SocialController {
         this.postService = postService;
         this.commentService = commentService;
         this.userService = userService;
-        this.dishService = dishService;
     }
 
     @PostMapping("/api/follow")
