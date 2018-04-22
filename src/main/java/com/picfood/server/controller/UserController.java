@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import static com.picfood.server.config.JwtUtil.USER_ID;
 
@@ -58,7 +59,11 @@ public class UserController {
         user.setEmail(loginMap.get("email"));
         user.setPassword(loginMap.get("password"));
         user.setName(loginMap.getOrDefault("name", ""));
-        user.setAvatar(loginMap.getOrDefault("avatar", ""));
+        Random rand = new Random();
+        String randomAvatar = "https://s3.us-east-1.amazonaws.com/picfoodphotos/";
+        randomAvatar += rand.nextBoolean() ? "male/" + (rand.nextInt(126) + 1) : "female/" + (rand.nextInt(113) + 1);
+        randomAvatar += ".png";
+        user.setAvatar(loginMap.getOrDefault("avatar", randomAvatar));
         User createdUser = userService.createUser(user);
         if (null == createdUser) {
             return new HashMap<String, String>() {{
