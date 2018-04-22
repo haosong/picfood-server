@@ -8,7 +8,7 @@ import com.picfood.server.entity.Upvote;
 import java.util.Date;
 import java.util.List;
 public interface CommentService {
-    public Comment makeComment(String uid, String postId, String content);
+    public CommentDTO makeComment(String uid, String postId, String content);
 
     public List<CommentDTO> getComments(String postId);
 

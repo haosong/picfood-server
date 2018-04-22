@@ -74,9 +74,9 @@ public class DishController {
                                                @RequestParam(value = "lon") Double lon, @RequestParam(value = "lat") Double lat, @RequestParam(value = "range") Double range) {
         List<Dish> res = dishService.searchDishes(lon, lat, range, keyword.toLowerCase());
         if (sorting.equals("distance")) {
-            res.sort(Comparator.comparingDouble(a -> restaurantService.calcDistanceById(a.getRestaurantId(),lon,lat)));
+            res.sort(Comparator.comparingDouble(a -> restaurantService.calcDistanceById(a.getRestaurantId(),lon,lat))); //sort restaurants according to restaurant distance
         } else if (sorting.equals("rate")) {
-            res.sort(Comparator.comparingDouble(a -> -a.getAvgRate()));
+            res.sort(Comparator.comparingDouble(a -> -a.getAvgRate())); // sort dishes according to rate
         }
         return res.stream().map(d -> converToDTO(d,lon,lat)).collect(Collectors.toList());
     }

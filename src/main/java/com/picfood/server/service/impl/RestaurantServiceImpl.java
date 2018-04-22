@@ -29,17 +29,6 @@ public class RestaurantServiceImpl implements RestaurantService {
         return restaurantRepository.findByRestaurantId(id);
     }
 
-    @Override
-    public List<Restaurant> getRestaurantByCondition(SearchCondition condition) {
-        float longitude = condition.getLongitude();
-        float latitude = condition.getLatitude();
-        String content = condition.getContent();
-
-        //TODO order by distance ( calc by longitude and latitude)
-        List<Restaurant> results = restaurantRepository.searchByContent(content);
-
-        return results;
-    }
 
     public Object createRestaurant(Restaurant restaurant){
         return restaurant == null ? null:restaurantRepository.save(restaurant);

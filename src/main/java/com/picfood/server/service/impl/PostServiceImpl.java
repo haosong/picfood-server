@@ -88,6 +88,7 @@ public class PostServiceImpl implements PostService {
                 dish.setPostNum(postNum - 1);
             }
         }
+        //delete comments, upvotes, image, and post accordindly
         commentRepository.deleteAllByPostId(postId);
         upvoteRepository.deleteAllByPostId(postId);
         amazonClient.deleteFileFromS3Bucket(post.getImageUrl());

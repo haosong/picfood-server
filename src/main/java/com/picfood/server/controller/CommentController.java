@@ -24,17 +24,12 @@ public class CommentController {
     }
 
     @PostMapping("/api/comment")
-    public Object makeComment(@RequestHeader(value = USER_ID) String userId, @RequestBody Map<String, String> commentMap) {
-        Comment comment = commentService.makeComment(userId, commentMap.get("postId"), commentMap.get("content"));
-        try{
-            return commentService.convertToDTO(comment);
-        } catch (NoSuchElementException e) {
-            return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);
-        }
+    public CommentDTO makeComment(@RequestHeader(value = USER_ID) String userId, @RequestBody Map<String, String> map) {
+        return commentService.makeComment(userId, map.get("postId"), map.get("content"));
     }
 
     @PostMapping("/api/delete/comment")
-    public void deleteComment(@RequestHeader(value = USER_ID) String userId, @RequestBody Map<String, String> map) {
+    public void deleteComment(@RequestBody Map<String, String> map) {
         commentService.deleteComment(map.get("commentId"));
     }
 

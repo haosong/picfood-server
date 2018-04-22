@@ -63,9 +63,9 @@ public class RestaurantController {
     public List<RestaurantSearchDTO> searchRestaurants( @RequestParam(value = "keyword") String keyword, @RequestParam(value = "sorting") String sorting,
                                                @RequestParam(value = "lon") Double lon, @RequestParam(value = "lat") Double lat, @RequestParam(value = "range") Double range) {
         List<Restaurant> res = restaurantService.searchRestaurants(lon, lat, range, keyword.toLowerCase());
-        if (sorting.equals("distance")) {
+        if (sorting.equals("distance")) { //sort restaurants according to distance
             res.sort(Comparator.comparingDouble(a -> restaurantService.calcDistanceById(a.getRestaurantId(),lon,lat)));
-        } else if (sorting.equals("rate")) {
+        } else if (sorting.equals("rate")) { //sort restaurants according to rate
             res.sort(Comparator.comparingDouble(a -> -a.getAvgRate()));
         }
         return res.stream().map(r->convertToSearchDTO(r, lon, lat)).collect(Collectors.toList());

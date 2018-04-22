@@ -19,17 +19,18 @@ public class UpvoteController {
     }
 
     @PostMapping("/api/upvote")
-    public Upvote like(@RequestHeader(value = USER_ID) String userId, @RequestBody Map<String, String> likeMap) {
-        return upvoteService.upvote(userId, likeMap.get("postId"));
+    public Upvote upvote(@RequestHeader(value = USER_ID) String userId, @RequestBody Map<String, String> map) {
+        return upvoteService.upvote(userId, map.get("postId"));
     }
 
     @PostMapping("/api/delete/upvote")
-    public void deleteUpvote(@RequestBody Map<String, String> map) {
+    public String deleteUpvote(@RequestBody Map<String, String> map) {
         upvoteService.deleteUpvote(map.get("upvoteId"), map.get("postId"));
+        return "delete success";
     }
 
     @GetMapping("/api/hasUpvoted")
-    public String hasUpvoted(@RequestHeader(value = USER_ID) String userId, @RequestParam String UserId, @RequestParam String PostId) {
+    public String hasUpvoted(@RequestParam String UserId, @RequestParam String PostId) {
         return upvoteService.hasUpvoted(UserId, PostId);
     }
 }

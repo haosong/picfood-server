@@ -39,12 +39,13 @@ public class CommentServiceImpl implements CommentService {
         this.commentRepository = commentRepository;
     }
 
-    public Comment makeComment(String uid, String postId, String content) {
+    public CommentDTO makeComment(String uid, String postId, String content) {
         Comment comment = new Comment();
         comment.setContent(content);
         comment.setCommenterId(uid);
         comment.setPostId(postId);
-        return commentRepository.save(comment);
+        commentRepository.save(comment);
+        return convertToDTO(comment);
     }
 
     public List<CommentDTO> getComments(String postId) {
