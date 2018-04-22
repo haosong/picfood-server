@@ -12,6 +12,14 @@ public abstract class Timeline {
 
     String dishName;
 
+    String posterId;
+
+    String posterName;
+
+    String restaurantId;
+
+    String restaurantName;
+
     abstract public Date getTime();
 
     abstract public String getUserId();
@@ -40,5 +48,37 @@ public abstract class Timeline {
 
     public void setDishName(String dishName) {
         this.dishName = dishName;
+    }
+
+    public String getPosterName() {
+        return posterName;
+    }
+
+    public void setPosterName(String posterName) {
+        this.posterName = posterName;
+    }
+
+    public String getRestaurantId() {
+        return restaurantId;
+    }
+
+    public void setRestaurantId(String restaurantId) {
+        this.restaurantId = restaurantId;
+    }
+
+    public String getRestaurantName() {
+        return restaurantName;
+    }
+
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
+    }
+
+    public String getPosterId() {
+        return posterId;
+    }
+
+    public void setPosterId(String posterId) {
+        this.posterId = posterId;
     }
 }
