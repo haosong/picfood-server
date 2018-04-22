@@ -24,8 +24,9 @@ public class UpvoteController {
     }
 
     @PostMapping("/api/delete/upvote")
-    public void deleteUpvote(@RequestBody Map<String, String> map) {
+    public String deleteUpvote(@RequestBody Map<String, String> map) {
         upvoteService.deleteUpvote(map.get("upvoteId"), map.get("postId"));
+        return "delete success";
     }
 
     @GetMapping("/api/hasUpvoted")
