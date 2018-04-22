@@ -24,17 +24,21 @@ public class UpvoteServiceImpl implements UpvoteService {
     }
 
     public Upvote upvote(String uid, String postId) {
-        Upvote like = new Upvote();
-        like.setUserId(uid);
-        like.setPostId(postId);
+        Upvote upvote = new Upvote();
+        upvote.setUserId(uid);
+        upvote.setPostId(postId);
         Post post = postRepository.findByPostId(postId);
         post.setUpvoteCount(Math.max(0, post.getUpvoteCount() + 1));
-        return upvoteRepository.save(like);
+        upvoteRepository.save(upvote);
+        return upvote;
     }
 
     public void deleteUpvote(String upvoteId, String postId) {
         upvoteRepository.deleteByUpvoteId(upvoteId);
         Post post = postRepository.findByPostId(postId);
+        if (post == null) {
+            return;
+        }
         post.setUpvoteCount(Math.max(0, post.getUpvoteCount() - 1));
     }
 
