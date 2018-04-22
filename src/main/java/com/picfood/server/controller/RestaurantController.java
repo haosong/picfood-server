@@ -61,8 +61,8 @@ public class RestaurantController {
 
     @GetMapping("/api/search/restaurants")
     public List<RestaurantSearchDTO> searchRestaurants( @RequestParam(value = "keyword") String keyword, @RequestParam(value = "sorting") String sorting,
-                                               @RequestParam(value = "lon") Double lon, @RequestParam(value = "lat") Double lat) {
-        List<Restaurant> res = restaurantService.searchRestaurants(lon, lat, keyword);
+                                               @RequestParam(value = "lon") Double lon, @RequestParam(value = "lat") Double lat, @RequestParam(value = "range") Double range) {
+        List<Restaurant> res = restaurantService.searchRestaurants(lon, lat, range, keyword.toLowerCase());
         if (sorting.equals("distance")) {
             res.sort(Comparator.comparingDouble(a -> restaurantService.calcDistanceById(a.getRestaurantId(),lon,lat)));
         } else if (sorting.equals("rate")) {
@@ -70,6 +70,7 @@ public class RestaurantController {
         }
         return res.stream().map(r->convertToSearchDTO(r, lon, lat)).collect(Collectors.toList());
     }
+
     private RestaurantSearchDTO convertToSearchDTO(Restaurant restaurant, double lon, double lat){
         RestaurantSearchDTO restaurantSearchDTO = modelMapper.map(restaurant, RestaurantSearchDTO.class);
         restaurantSearchDTO.setDistance(restaurantService.calcDistanceById(restaurant.getRestaurantId(), lon, lat));

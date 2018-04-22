@@ -30,6 +30,8 @@ public class CommentServiceImpl implements CommentService {
     private UserRepository userRepository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private PostRepository postRepository;
 
     @Autowired
     public CommentServiceImpl(CommentRepository commentRepository) {
@@ -57,6 +59,8 @@ public class CommentServiceImpl implements CommentService {
         }
         commentDTO.setCommenter(commenter.getName());
         commentDTO.setCommenterAvatar(commenter.getAvatar());
+        Post post = postRepository.findByPostId(comment.getPostId());
+        commentDTO.setPosterName(post.getUserName());
         return commentDTO;
     }
 

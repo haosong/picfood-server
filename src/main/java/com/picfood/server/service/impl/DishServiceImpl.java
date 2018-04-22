@@ -73,7 +73,7 @@ public class DishServiceImpl implements DishService {
         return dishRepository.findByNameContainingOrCategoryContaining(keyword, keyword);
     }
 
-    public List<Dish> searchDishes(double lon, double lat, String keyword) {
-        return dishRepository.searchDishes(lon, lat, keyword);
+    public List<Dish> searchDishes(double lon, double lat, double range, String keyword) {
+        return dishRepository.searchDishes(lon, lat, range, keyword);
     }
 }
