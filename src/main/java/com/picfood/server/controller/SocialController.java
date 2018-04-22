@@ -24,7 +24,6 @@ public class SocialController {
     private final PostService postService;
     private final CommentService commentService;
     private final UserService userService;
-    private final DishService dishService;
 
     @Autowired
     public SocialController(SocialService socialService, UpvoteService upvoteService, PostService postService, CommentService commentService, UserService userService, DishService dishService) {
@@ -76,7 +75,7 @@ public class SocialController {
             timelines.addAll(postService.getPostByUserId(f.getUserId()));
         }
         timelines.stream().map(this::addTimelineDetail).collect(Collectors.toList());
-        timelines.sort((o1, o2) -> (o1.getTime().compareTo(o2.getTime())));
+        timelines.sort((o1, o2) -> (o2.getTime().compareTo(o1.getTime())));
         return timelines;
     }
 
@@ -87,11 +86,11 @@ public class SocialController {
         timelines.addAll(upvoteService.getUpvoteByUserId(id));
         timelines.addAll(postService.getPostByUserId(id));
         timelines.stream().map(this::addTimelineDetail).collect(Collectors.toList());
-        timelines.sort((o1, o2) -> (o1.getTime().compareTo(o2.getTime())));
+        timelines.sort((o1, o2) -> (o2.getTime().compareTo(o1.getTime())));
         return timelines;
     }
 
-    public Timeline addTimelineDetail(Timeline t) {
+    private Timeline addTimelineDetail(Timeline t) {
         User u = userService.getUserById(t.getUserId());
         t.setUserAvatar(u.getAvatar());
         t.setUserName(u.getName());
