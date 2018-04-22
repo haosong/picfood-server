@@ -81,9 +81,6 @@ public class DishController {
         return res.stream().map(d -> converToDTO(d,lon,lat)).collect(Collectors.toList());
     }
 
-    private double getDist(double lon1, double lat1, double lon2, double lat2) {
-        return (lon1 - lon2) * (lon1 - lon2) + (lat1 - lat2) * (lat1 - lat2);
-    }
 
     public DishDTO convertToDTO(Dish dish) {
         DishDTO dishDTO = modelMapper.map(dish, DishDTO.class);
