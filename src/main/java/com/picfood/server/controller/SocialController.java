@@ -101,6 +101,7 @@ public class SocialController {
                 t.setPosterName(p.getCreator());
                 t.setPosterId(p.getCreatorId());
                 t.setDishName(p.getDishName());
+                t.setDishId(p.getDishId());
                 // Dish d = dishService.findByPostId(t.getPostId());
                 // if (d != null) t.setDishName(d.getName());
             }
