@@ -66,6 +66,7 @@ public class DishController {
         DishDTO dishDTO = convertToDTO(dish);
         List<PostDTO> postDTOList = getDishPosts(id);
         dishDTO.setPosts(postDTOList);
+        dishDTO.setRestaurantName(restaurantService.getRestaurantById(dish.getRestaurantId()).getName());
         return dishDTO;
     }
     @GetMapping("/api/search/dishes")
