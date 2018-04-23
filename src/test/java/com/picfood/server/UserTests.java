@@ -41,6 +41,6 @@ public class UserTests {
         Assert.assertTrue(userController.getUser("2c9f945c6297322f0162a33ceaeb0037")!=null);
         Assert.assertTrue(userController.getUsersByName("2c9f945c6297322f0162a33ceaeb0037","shuqi")!=null);
         Assert.assertTrue(userController.getUserByUserId("2c9f945c6297322f0162a33ceaeb0037","2c9f945c62efdf0c0162eff4703d0012")!=null);
-        
+
     }
 }
