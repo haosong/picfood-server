@@ -95,17 +95,19 @@ public class SocialController {
         int length = 20;
         if (timelines.size() > length)
             while (timelines.get(length).getTime().equals(timelines.get(length - 1))) length++;
-
-        List<Timeline> first20 = timelines.subList(0, Math.min(length,timelines.size()));
+        List<Timeline> first20 = timelines.subList(0, Math.min(length, timelines.size()));
         first20.stream().map(this::addTimelineDetail).collect(Collectors.toList());
         return first20;
     }
 
     private List<Timeline> getAllTimeline(String id) {
         List<Timeline> timelines = new ArrayList<>();
-        timelines.addAll(commentService.getCommentByUserId(id));
-        timelines.addAll(upvoteService.getUpvoteByUserId(id));
-        timelines.addAll(postService.getPostByUserId(id));
+        List<User> followings = socialService.getFollowings(id);
+        for (User f : followings) {
+            timelines.addAll(commentService.getCommentByUserId(f.getUserId()));
+            timelines.addAll(upvoteService.getUpvoteByUserId(f.getUserId()));
+            timelines.addAll(postService.getPostByUserId(f.getUserId()));
+        }
         timelines.stream().map(this::addTimelineDetail).collect(Collectors.toList());
         timelines.sort((o1, o2) -> (o2.getTime().compareTo(o1.getTime())));
         return timelines;
