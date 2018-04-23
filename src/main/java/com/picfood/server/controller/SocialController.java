@@ -95,7 +95,8 @@ public class SocialController {
         int length = 20;
         if (timelines.size() > length)
             while (timelines.get(length).getTime().equals(timelines.get(length - 1))) length++;
-        List<Timeline> first20 = timelines.subList(0, length);
+
+        List<Timeline> first20 = timelines.subList(0, Math.min(length,timelines.size()));
         first20.stream().map(this::addTimelineDetail).collect(Collectors.toList());
         return first20;
     }

@@ -46,10 +46,10 @@ public class SocialTest {
     }
     @Test
     public void testGetTimeLine(){
-        List<Timeline> result = socialController.getTimeline("2c9abebe625fd50801625fd6c27b0001");
-        Assert.assertTrue(result.size()>0);
-        result = socialController.getTimelineByUserId("2c9abebe625fd50801625fd6c27b0001","2c9abebe625fd50801625fd6c27b0001");
-        Assert.assertTrue(result.size() > 0);
+        List<Timeline> result = socialController.getTimeline("2c9abebe625fd50801625fd6c27b0001", new Date());
+        Assert.assertTrue(result!=null);
+        result = socialController.getTimelineByUserId("2c9abebe625fd50801625fd6c27b0001","2c9abebe625fd50801625fd6c27b0001", new Date());
+        Assert.assertTrue(result!=null);
     }
 
 
