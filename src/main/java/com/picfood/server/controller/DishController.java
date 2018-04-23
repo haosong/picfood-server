@@ -90,6 +90,7 @@ public class DishController {
 
     public DishSearchDTO converToDTO(Dish dish, Double lon, Double lat){
         DishSearchDTO dishSearchDTO = modelMapper.map(dish, DishSearchDTO.class);
+        dishSearchDTO.setRestaurantName(restaurantService.getRestaurantById(dish.getRestaurantId()).getName());
         dishSearchDTO.setDistance(restaurantService.calcDistanceById(dish.getRestaurantId(),lon,lat));
         dishSearchDTO.setImageUrls(postService.getImagesUrlsByDishId(dish.getDishId()));
         return dishSearchDTO;
