@@ -11,5 +11,5 @@ java -jar ./target/server-0.0.1-SNAPSHOT.jar
 ````
 
 ### API Documentation (Swagger UI) 
-Online version: https://api.pic-food.com
-Local Deployment: https://localhost:8080/swagger-ui.html
+- Online version: https://api.pic-food.com
+- Local Deployment: https://localhost:8080/swagger-ui.html
