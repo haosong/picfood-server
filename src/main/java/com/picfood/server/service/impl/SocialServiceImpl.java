@@ -29,14 +29,16 @@ public class SocialServiceImpl implements SocialService {
     }
 
     @Override
-    @Transactional
     public boolean follow(String user, String other) {
+        // @Transactional
         User follower = userRepository.findByUserId(user);
         User followee = userRepository.findByUserId(other);
         if (null != followee && null != follower) {
             followRepository.save(new Follow(user, other));
-            follower.setFollowCount(follower.getFollowCount() + 1);
-            followee.setFanCount(followee.getFanCount() + 1);
+            long followCount = follower.getFollowCount() + 1;
+            follower.setFollowCount(followCount);
+            long fanCount = followee.getFanCount() + 1;
+            followee.setFanCount(fanCount);
             userRepository.save(follower);
             userRepository.save(followee);
             return true;
