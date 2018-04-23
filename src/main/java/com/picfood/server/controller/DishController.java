@@ -81,10 +81,9 @@ public class DishController {
         return res.stream().map(d -> converToDTO(d,lon,lat)).collect(Collectors.toList());
     }
 
-
     public DishDTO convertToDTO(Dish dish) {
         DishDTO dishDTO = modelMapper.map(dish, DishDTO.class);
-        dishDTO.setRestaurantName(dish.getRestaurantId());
+        dishDTO.setRestaurantName(restaurantService.getRestaurantById(dish.getRestaurantId()).getName());
         return dishDTO;
     }
 
