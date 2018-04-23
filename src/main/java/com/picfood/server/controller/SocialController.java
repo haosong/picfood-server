@@ -71,7 +71,7 @@ public class SocialController {
     public List<Timeline> getTimeline(@RequestHeader(value = USER_ID) String userId,
                                       @RequestParam(value = "time", required = false)
                                       @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date time) {
-        return time == null ? getAllTimeline(userId) : getPageTimeline(userId, time);
+        return time == null ? getAllTimeline(userId, false) : getPageTimeline(userId, time);
     }
 
     @GetMapping("/api/timeline/{id}")
@@ -79,9 +79,8 @@ public class SocialController {
                                               @PathVariable("id") String id,
                                               @RequestParam(value = "time", required = false)
                                               @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Date time) {
-        return time == null ? getAllTimeline(id) : getPageTimeline(id, time);
+        return time == null ? getAllTimeline(id, true) : getPageTimeline(id, time);
     }
-
 
     private List<Timeline> getPageTimeline(String id, Date time) {
         List<User> followings = socialService.getFollowings(id);
@@ -100,9 +99,9 @@ public class SocialController {
         return first20;
     }
 
-    private List<Timeline> getAllTimeline(String id) {
+    private List<Timeline> getAllTimeline(String id, boolean one) {
         List<Timeline> timelines = new ArrayList<>();
-        List<User> followings = socialService.getFollowings(id);
+        List<User> followings = one ? Collections.singletonList(userService.getUserById(id)) : socialService.getFollowings(id);
         for (User f : followings) {
             timelines.addAll(commentService.getCommentByUserId(f.getUserId()));
             timelines.addAll(upvoteService.getUpvoteByUserId(f.getUserId()));
