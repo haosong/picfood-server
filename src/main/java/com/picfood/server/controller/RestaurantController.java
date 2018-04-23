@@ -54,9 +54,9 @@ public class RestaurantController {
     }
 
     @GetMapping("/api/restaurants")
-
-    public List<Restaurant> getNearRestaurant(@RequestParam("lon") Double lon, @RequestParam("lat") Double lat){
-       return restaurantService.getRestaurantByLocation(lon,lat);
+    public List<RestaurantSearchDTO> getNearRestaurant(@RequestParam("lon") Double lon, @RequestParam("lat") Double lat){
+       List<Restaurant> res = restaurantService.getRestaurantByLocation(lon,lat);
+        return res.stream().map(r->convertToSearchDTO(r, lon, lat)).collect(Collectors.toList());
     }
 
     @GetMapping("/api/search/restaurants")
