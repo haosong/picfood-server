@@ -26,7 +26,7 @@ public interface RestaurantRepository  extends JpaRepository<Restaurant, String>
     public List<Restaurant> searchByContent(@Param("content") String content);
 
     @Query(value = "SELECT   *,\n" +
-            "        (POWER(MOD(ABS(r.longitude - :lng),360),2) + POWER(ABS(r.latitude - :lat),2)) AS distance  \n" +
+            "        get_distance(latitude, longitude, :lat, :lng) AS distance  \n" +
             "        FROM restaurant as r  \n" +
             "        ORDER BY distance LIMIT 100 ",nativeQuery =  true)
     public List<Restaurant> findRestaurantByLocation(@Param("lng") double lon, @Param("lat")double lat);
