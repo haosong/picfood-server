@@ -40,7 +40,7 @@ public class RestaurantTests {
     }
     @Test
     public void testGetNearRestaurant(){
-        List<Restaurant> result = restaurantController.getNearRestaurant(-72.9265664,41.3052498);
+        List<RestaurantSearchDTO> result = restaurantController.getNearRestaurant(-72.9265664,41.3052498);
         Assert.assertTrue(result.size() > 0 && result.get(0).getRestaurantId().equals("cajun-boiled-seafood-ct-new-haven"));
     }
     @Test
