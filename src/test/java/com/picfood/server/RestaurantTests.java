@@ -29,13 +29,13 @@ public class RestaurantTests {
     }
     @Test
     public void testGetAllDishesCatagory(){
-        List<String> result = restaurantController.getAllDishesCategory("rice-pot-thai-cuisine-new-haven");
-        Assert.assertTrue(result.size() > 0 && result.get(0).equals("steak"));
+        List<String> result = restaurantController.getAllDishesCategory("junzi-kitchen-new-haven");
+        Assert.assertTrue(result.size() > 0);
     }
     @Test
     public void testGetDishByRestaurant(){
-        List<Dish> result = restaurantController.getDishesByRestaurant("basil-restaurant-new-haven-2");
-        Assert.assertTrue(result.size() > 0 && result.get(0).getDishId().equals("2c9abebe625fd50801625fe33bb6000f"));
+        List<Dish> result = restaurantController.getDishesByRestaurant("junzi-kitchen-new-haven");
+        Assert.assertTrue(result.size() > 0);
 
     }
     @Test

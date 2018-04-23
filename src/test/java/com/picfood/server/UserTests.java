@@ -9,8 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,13 +19,12 @@ import java.util.Map;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Transactional
-@Rollback
 public class UserTests {
     @Autowired
     UserController userController;
 
     @Test
+    @Transactional
     public void testRegisterAndLogin(){
         Map<String, String> loginMap = new HashMap<>();
         loginMap.put("email","testa");
@@ -38,9 +37,9 @@ public class UserTests {
 
     @Test
     public void testGetUser(){
-        Assert.assertTrue(userController.getUser("2c9f945c6297322f0162a33ceaeb0037")!=null);
-        Assert.assertTrue(userController.getUsersByName("2c9f945c6297322f0162a33ceaeb0037","shuqi")!=null);
-        Assert.assertTrue(userController.getUserByUserId("2c9f945c6297322f0162a33ceaeb0037","2c9f945c62efdf0c0162eff4703d0012")!=null);
+        Assert.assertTrue(userController.getUser("2c9f945c62f029b80162f04560a20002")!=null);
+        Assert.assertTrue(userController.getUsersByName("2c9f945c62f029b80162f04560a20002","shuqi")!=null);
+        Assert.assertTrue(userController.getUserByUserId("2c9f945c62f029b80162f04560a20002","2c9f945c62f029b80162f04560a20002")!=null);
 
     }
 }
