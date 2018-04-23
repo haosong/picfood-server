@@ -18,37 +18,36 @@ import javax.transaction.Transactional;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Transactional
-@Rollback
 public class SocialTest {
     @Autowired
     SocialController socialController;
 
     @Test
     public void testFollow(){
-        boolean result = (boolean)socialController.follow("2c9abebe625fe79701625fe925200000", "2c9f945c6297322f016297a04092000f");
+        boolean result = (boolean)socialController.follow("2c9f945c62f029b80162f04560a20002", "2c9f945c62f029b80162f04560a20002");
         Assert.assertTrue(result);
-        result = (boolean)socialController.unfollow("2c9abebe625fe79701625fe925200000", "2c9f945c6297322f016297a04092000f");
+        result = (boolean)socialController.unfollow("2c9f945c62f029b80162f04560a20002", "2c9f945c62f029b80162f04560a20002");
         Assert.assertTrue(result);
     }
     @Test
+    @Transactional
     public void testGetFollow(){
-        List<User> followers = socialController.getFollowers("2c9f945c6297322f0162a3422b2a0041");
-        Assert.assertTrue(followers.size() > 0 && followers.get(0).getUserId().equals("2c9f945c62eea5b10162eea611fb0000"));
-        followers = socialController.getFollowers("2c9f945c6297322f0162a3422b2a0041","2c9f945c6297322f0162a3422b2a0041");
-        Assert.assertTrue(followers.size() > 0 && followers.get(0).getUserId().equals("2c9f945c62eea5b10162eea611fb0000"));
+        List<User> followers = socialController.getFollowers("2c9f945c62f029b80162f04560a20002");
+        Assert.assertTrue(followers.size() > 0);
+        followers = socialController.getFollowers("2c9f945c62f029b80162f04560a20002","2c9f945c62f029b80162f04560a20002");
+        Assert.assertTrue(followers.size() > 0);
 
-        List<User> followings = socialController.getFollowings("2c9abebe625fd50801625fd6c27b0001");
-        Assert.assertTrue(followings.size()>0 && followings.get(0).getUserId().equals("2c9abebe625fd50801625fd5e0390000"));
-        followings = socialController.getFollowings("2c9abebe625fd50801625fd6c27b0001","2c9abebe625fd50801625fd6c27b0001");
-        Assert.assertTrue(followings.size()>0 && followings.get(0).getUserId().equals("2c9abebe625fd50801625fd5e0390000"));
+        List<User> followings = socialController.getFollowings("2c9f945c62f029b80162f04560a20002");
+        Assert.assertTrue(followings.size()>0 );
+        followings = socialController.getFollowings("2c9f945c62f029b80162f04560a20002","2c9f945c62f029b80162f04560a20002");
+        Assert.assertTrue(followings.size()>0 );
 
     }
     @Test
     public void testGetTimeLine(){
-        List<Timeline> result = socialController.getTimeline("2c9abebe625fd50801625fd6c27b0001", new Date());
+        List<Timeline> result = socialController.getTimeline("2c9f945c62f029b80162f04560a20002", new Date());
         Assert.assertTrue(result!=null);
-        result = socialController.getTimelineByUserId("2c9abebe625fd50801625fd6c27b0001","2c9abebe625fd50801625fd6c27b0001", new Date());
+        result = socialController.getTimelineByUserId("2c9f945c62f029b80162f04560a20002","2c9f945c62f029b80162f04560a20002", new Date());
         Assert.assertTrue(result!=null);
     }
 
