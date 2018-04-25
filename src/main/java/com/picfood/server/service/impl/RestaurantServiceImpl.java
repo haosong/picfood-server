@@ -61,7 +61,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     {
         return d * Math.PI / 180.0;
     }
-    private double EARTH_RADIUS = 3959;
+    private double EARTH_RADIUS = 6371;
     private double getDist(double lon1, double lat1, double lon2, double lat2) {
         double radLat1 = rad(lat1);
         double radLat2 = rad(lat2);

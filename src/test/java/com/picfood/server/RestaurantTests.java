@@ -45,9 +45,9 @@ public class RestaurantTests {
     }
     @Test
     public void testSearchRestaurants(){
-        List<RestaurantSearchDTO> result = restaurantController.searchRestaurants("basil","distance", -72.92,41.30, 100.);
+        List<RestaurantSearchDTO> result = restaurantController.searchRestaurants("basil","distance", -72.92,41.30, 10000.);
         Assert.assertTrue(result.size() > 0 && result.get(0).getName().equals("Basil Restaurant"));
-        List<RestaurantSearchDTO> result1 = restaurantController.searchRestaurants("basil", "rate", -72.92,41.30, 100.);
+        List<RestaurantSearchDTO> result1 = restaurantController.searchRestaurants("basil", "rate", -72.92,41.30, 10000.);
         Assert.assertTrue(result1.size() > 0 && result1.get(0).getName().equals("Basil Restaurant"));
 
     }
